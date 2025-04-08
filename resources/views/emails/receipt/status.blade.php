@@ -1,26 +1,23 @@
-@component('mail::message')
-# Notifikasi Perubahan Status Receipt
+<h1>Notifikasi Perubahan Status Receipt</h1>
 
-Receipt untuk Invoice: *{{ $receipt->invoice->invoice_number }}*
-Jumlah Dibayar: *Rp{{ number_format($receipt->amount_paid, 2) }}*
-Metode Pembayaran: *{{ $receipt->payment_method }}*
-Status Saat Ini: *{{ $receipt->status }}*
+<p>Receipt untuk Invoice: <strong>{{ $receipt->invoice->invoice_number }}</strong></p>
+<p>Jumlah Dibayar: <strong>Rp{{ number_format($receipt->amount_paid, 2) }}</strong></p>
+<p>Metode Pembayaran: <strong>{{ $receipt->payment_method }}</strong></p>
+<p>Status Saat Ini: <strong>{{ $receipt->status }}</strong></p>
 
-@isset($receipt->draft_data['approval_reason'])
-*Alasan Disetujui*: {{ $receipt->draft_data['approval_reason'] }}
-@endisset
+@if(isset($receipt->draft_data['approval_reason']))
+    <p><strong>Alasan Disetujui:</strong> {{ $receipt->draft_data['approval_reason'] }}</p>
+@endif
 
-@isset($receipt->draft_data['rejection_reason'])
-*Alasan Ditolak*: {{ $receipt->draft_data['rejection_reason'] }}
-@endisset
+@if(isset($receipt->draft_data['rejection_reason']))
+    <p><strong>Alasan Ditolak:</strong> {{ $receipt->draft_data['rejection_reason'] }}</p>
+@endif
 
-@component('mail::button', ['url' => route('receipts.show', $receipt->id)])
-Lihat Detail Receipt
-@endcomponent
+<p><a href="{{ route('receipts.show', $receipt->id) }}">Lihat Detail Receipt</a></p>
 
-*Unduh PDF Receipt (Scan QR Code):*
-[<img src="{{ $qrCodeUrl }}" alt="QR Code" width="150">]({{ route('receipts.download', $receipt->id) }})
+@if($receipt->status === 'Disetujui')
+    <p><strong>Scan QR Code untuk Unduh Receipt:</strong></p>
+    <img src="{{ $qrCodeUrl }}" width="150" alt="QR Code">
+@endif
 
-Terima kasih,<br>
-{{ config('app.name') }}
-@endcomponent
+<p>Terima kasih,<br>{{ config('app.name') }}</p>
