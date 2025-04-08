@@ -18,12 +18,8 @@ Status Saat Ini: *{{ $receipt->status }}*
 Lihat Detail Receipt
 @endcomponent
 
-@if($receipt->status === 'Disetujui')
----
-
 *Unduh PDF Receipt (Scan QR Code):*
 [<img src="{{ $qrCodeUrl }}" alt="QR Code" width="150">]({{ route('receipts.download', $receipt->id) }})
-@endif
 
 Terima kasih,<br>
 {{ config('app.name') }}
