@@ -14,31 +14,35 @@ class InvoiceStatusChangedMail extends Mailable
 
     public $invoice;
     public $status;
-    public $qrCodeBase64;
+    public $qrCid; // Content ID untuk embed image
 
     public function __construct(Invoice $invoice, $status)
     {
         $this->invoice = $invoice;
         $this->status = $status;
-
-        // Buat URL untuk download PDF invoice
-        $pdfUrl = route('invoices.download', $this->invoice->id);
-
-        // Generate QR Code dalam bentuk PNG (binary)
-        $qrCodeBinary = QrCode::format('png')->size(200)->generate($pdfUrl);
-
-        // Encode QR Code ke base64 untuk ditampilkan inline di email
-        $this->qrCodeBase64 = base64_encode($qrCodeBinary);
     }
 
     public function build()
     {
+        // URL untuk PDF invoice
+        $pdfUrl = route('invoices.download', $this->invoice->id);
+
+        // Generate QR code PNG binary
+        $qrCodeBinary = QrCode::format('png')->size(200)->generate($pdfUrl);
+
+        // Embed QR code sebagai attachment inline (embedded image)
+        $qrCid = $this->attachData($qrCodeBinary, 'qrcode.png', [
+            'mime' => 'image/png',
+        ])->embedData($qrCodeBinary, 'qrcode.png', 'image/png');
+
+        $this->qrCid = $qrCid;
+
         return $this->subject("Perubahan Status Invoice #{$this->invoice->invoice_number}")
                     ->view('emails.invoice.status')
                     ->with([
                         'invoice' => $this->invoice,
                         'status' => $this->status,
-                        'qrCodeBase64' => $this->qrCodeBase64, // dikirim ke view
+                        'qrCid' => $this->qrCid,
                     ]);
     }
 }

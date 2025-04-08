@@ -24,10 +24,10 @@
         <a href="{{ route('invoices.show', $invoice->id) }}" style="display:inline-block; padding:10px 20px; background-color:#2d3748; color:white; text-decoration:none; border-radius:5px;">Lihat Invoice</a>
     </p>
 
-    @isset($qrCodeBase64)
+    @if (!empty($qrCid))
         <p><strong>Scan QR Code untuk unduh PDF Invoice:</strong></p>
-        <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="QR Code" width="200">
-    @endisset
+        <img src="{{ $qrCid }}" alt="QR Code" width="200">
+    @endif
 
     <p>Terima kasih,</p>
 </body>
