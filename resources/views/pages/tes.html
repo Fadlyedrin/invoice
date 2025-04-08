@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="branch-type">Pilih Jenis</label>
+        <select id="branch-type" class="form-control">
+            <option value="Pusat">Pusat</option>
+            <option value="Cabang">Cabang</option>
+        </select>
+    </div>
+</div>
+
+<!-- Form ini akan disembunyikan jika Pusat dipilih -->
+<div id="branch-fields" style="display: none;">
+    <hr class="horizontal dark">
+    <p class="text-uppercase text-sm">Contact Information</p>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Address</label>
+                <input class="form-control" type="text" name="address"
+                    value="{{ old('address', auth()->user()->address) }}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="example-text-input" class="form-control-label">City</label>
+                <input class="form-control" type="text" name="city"
+                    value="{{ old('city', auth()->user()->city) }}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="example-text-input" class="form-control-label">No.telp</label>
+                <input class="form-control" type="number" name="phone"
+                    value="{{ old('phone', auth()->user()->phone) }}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let branchType = document.getElementById("branch-type");
+    let branchFields = document.getElementById("branch-fields");
+
+    branchType.addEventListener("change", function() {
+        if (this.value === "Cabang") {
+            branchFields.style.display = "block"; // Tampilkan form
+        } else {
+            branchFields.style.display = "none"; // Sembunyikan form
+        }
+    });
+
+    // Pastikan status tetap setelah reload jika ada nilai sebelumnya
+    if (branchType.value === "Cabang") {
+        branchFields.style.display = "block";
+    }
+});
+</script>
+
+</body>
+</html>
