@@ -68,13 +68,4 @@ Route::post('/receipts/{receipt}/approve', [ReceiptController::class, 'approve']
 Route::post('/receipts/{receipt}/reject', [ReceiptController::class, 'reject'])->name('receipts.reject');
 Route::get('/receipts/{receipt}/download', [ReceiptController::class, 'download'])->name('receipts.download');
 
-
-Route::get('/qr/receipt/{id}', function ($id) {
-    $receipt = Receipt::findOrFail($id);
-    $pdfUrl = route('receipts.download', $receipt->id);
-
-    return response(QrCode::format('png')->size(200)->generate($pdfUrl))
-        ->header('Content-Type', 'image/png');
-})->name('qr.receipt');
-
 });
