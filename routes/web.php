@@ -58,15 +58,17 @@ Route::group(['middleware' => ['isAdmin']], function () {
 	Route::resource('users', UserController::class);
 
 	Route::resource('invoices', InvoiceController::class);
-	
-	});
-
 	Route::post('/invoices/{invoice}/approve', [InvoiceController::class, 'approve'])->name('invoices.approve');
 	Route::post('/invoices/{invoice}/reject', [InvoiceController::class, 'reject'])->name('invoices.reject');
-	Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])->name('invoices.download');
-	
-	
+
 	Route::resource('receipts', ReceiptController::class);
 	Route::post('/receipts/{receipt}/approve', [ReceiptController::class, 'approve'])->name('receipts.approve');
 	Route::post('/receipts/{receipt}/reject', [ReceiptController::class, 'reject'])->name('receipts.reject');
+
+	});
+
+	
+	Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])->name('invoices.download');
 	Route::get('/receipts/{receipt}/download', [ReceiptController::class, 'download'])->name('receipts.download');
+	
+	
