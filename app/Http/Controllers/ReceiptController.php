@@ -14,12 +14,22 @@ use Illuminate\Support\Facades\Storage;
 
 class ReceiptController extends Controller
 {
-    public function index()
-    {
-        $userId = Auth::user()->id;
-        $receipts = Receipt::with('invoice')->whereRelation('invoice', 'created_by', $userId)->latest()->get();
-        return view('receipts.index', compact('receipts'));
+public function index()
+{
+    $user = Auth::user();
+    
+    // Check if user has admin_pusat role
+    if ($user->hasRole('admin pusat')) {
+        // Admin pusat can see all receipts
+        $receipts = Receipt::with('invoice')->latest()->get();
+    } else {
+        // Regular admins can only see receipts from their invoices
+        $receipts = Receipt::with('invoice')->whereRelation('invoice', 'created_by', $user->id)->latest()->get();
     }
+    
+    return view('receipts.index', compact('receipts'));
+}
+
 
     public function create()
     {

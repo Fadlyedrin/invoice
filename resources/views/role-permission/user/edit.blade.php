@@ -128,7 +128,51 @@
         @include('layouts.footers.auth.footer')
     </div>
 @endsection
+    <style>
 
+
+        @media (max-width: 767px) {
+            .container-fluid {
+                padding-left: 0.1rem;
+                padding-right: 0.1rem;
+            }
+
+            .row.mx-1 {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            .card-body {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+
+            .invoice-card {
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+            }
+
+            .card-header {
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .btn-sm {
+                padding: 0.35rem 0.65rem;
+                font-size: 0.875rem;
+            }
+
+            /* Add extra margin to buttons on mobile */
+            .action-buttons .btn {
+                margin-right: 8px;
+            }
+
+            .action-buttons .btn:last-child {
+                margin-right: 0;
+            }
+        }
+    </style>
 {{-- @push('js')
     <script>
         document.addEventListener("DOMContentLoaded", function() {

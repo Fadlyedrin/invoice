@@ -3,7 +3,7 @@
 @section('content')
     @include('layouts.navbars.auth.topnav')
     <div class="container-fluid py-4">
-        <div class="row mt-4 mx-4">
+        <div class="row mt-4 mx-1 mx-sm-4">
             <div class="col-12">
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -23,22 +23,18 @@
                             @csrf
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Status</label>
-                                        <select name="status" class="form-select" required>
-                                            <option value="Draft">Draft</option>
-                                            <option value="Menunggu Approval">Menunggu Approval</option>
-                                        </select>
-                                    </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label class="form-label">Status</label>
+                                    <select name="status" class="form-select" required>
+                                        <option value="Draft">Draft</option>
+                                        <option value="Menunggu Approval">Menunggu Approval</option>
+                                    </select>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Payment Status</label>
-                                        <select name="payment_status" class="form-select" required>
-                                            <option value="Pending">Pending</option>
-                                        </select>
-                                    </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label class="form-label">Payment Status</label>
+                                    <select name="payment_status" class="form-select" required>
+                                        <option value="Pending">Pending</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -51,25 +47,25 @@
                                 </div>
                                 <div class="card-body">
                                     <div id="itemsContainer">
-                                        <div class="row item-row mb-3">
-                                            <div class="col-md-4">
+                                        <div class="row item-row gx-2 gy-2 mb-3">
+                                            <div class="col-12 col-md-4">
                                                 <input type="text" name="items[0][item_name]" class="form-control"
                                                     placeholder="Item Name" required>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-6 col-md-2">
                                                 <input type="number" name="items[0][quantity]"
                                                     class="form-control quantity" placeholder="Quantity" required>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-6 col-md-3">
                                                 <input type="number" step="0.01" name="items[0][price_per_item]"
                                                     class="form-control price" placeholder="Price per Item" required>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-6 col-md-2">
                                                 <input type="number" step="0.01" name="items[0][total_price]"
                                                     class="form-control total" placeholder="Total" readonly>
                                             </div>
-                                            <div class="col-md-1">
-                                                <button type="button" class="btn btn-danger btn-sm remove-item">
+                                            <div class="col-6 col-md-1 d-flex align-items-start">
+                                                <button type="button" class="btn btn-danger btn-sm remove-item mt-1">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -88,8 +84,56 @@
             </div>
         </div>
     </div>
+@endsection
 
-    @push('js')
+@push('css')
+    <style>
+
+
+        @media (max-width: 767px) {
+            .container-fluid {
+                padding-left: 0.1rem;
+                padding-right: 0.1rem;
+            }
+
+            .row.mx-1 {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            .card-body {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+
+            .invoice-card {
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+            }
+
+            .card-header {
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .btn-sm {
+                padding: 0.35rem 0.65rem;
+                font-size: 0.875rem;
+            }
+
+            /* Add extra margin to buttons on mobile */
+            .action-buttons .btn {
+                margin-right: 8px;
+            }
+
+            .action-buttons .btn:last-child {
+                margin-right: 0;
+            }
+        }
+    </style>
+@endpush
+@push('js')
         <script>
             let itemCount = 0;
 
@@ -134,4 +178,3 @@
             });
         </script>
     @endpush
-@endsection

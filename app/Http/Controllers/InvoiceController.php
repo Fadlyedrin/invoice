@@ -11,13 +11,29 @@ use Illuminate\Support\Facades\Auth;
 class InvoiceController extends Controller
 {
     // CRUD Resource Methods
-    public function index()
-    {
-        $userId = Auth::user()->id;
-        $invoices = Invoice::with('items')->where('created_by', $userId)->latest()->get();
-        // $invoices = Invoice::with('items')->latest()->get();
-        return view('invoices.index', compact('invoices'));
+    // public function index()
+    // {
+    //     $userId = Auth::user()->id;
+    //     $invoices = Invoice::with('items')->where('created_by', $userId)->latest()->get();
+    //     $invoices = Invoice::with('items')->latest()->get();
+    //     return view('invoices.index', compact('invoices'));
+    // }
+
+public function index()
+{
+    $user = Auth::user();
+    
+    // Check if user has admin_pusat role
+    if ($user->hasRole('admin pusat')) {
+        // Admin pusat can see all invoices
+        $invoices = Invoice::with(['items', 'creator'])->latest()->get();
+    } else {
+        // Regular admins can only see their own invoices
+        $invoices = Invoice::with(['items', 'creator'])->where('created_by', $user->id)->latest()->get();
     }
+    
+    return view('invoices.index', compact('invoices'));
+}
 
     public function create()
     {
