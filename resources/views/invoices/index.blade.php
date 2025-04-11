@@ -12,6 +12,9 @@
                             <i class="fas fa-plus"></i> Create Invoice
                         </a>
                     </div>
+                    <div id="alert">
+                        @include('components.alert')
+                    </div>
                     <div class="card-body px-2 px-sm-5 pt-0 pb-2">
                         <!-- Mobile view - card style -->
                         <div class="d-block d-md-none px-1">
@@ -35,9 +38,10 @@
                                             {{ $invoice->status }}
                                         </span>
                                         <span
-                                            class="badge bg-{{ $invoice->payment_status == 'Lunas' ? 'success' : 'danger' }}">
+                                            class="badge bg-{{ $invoice->payment_status == 'Pending' ? 'warning' : ($invoice->payment_status == 'Partial' ? 'info' : ($invoice->payment_status == 'Complete' ? 'success' : 'secondary')) }}">
                                             {{ $invoice->payment_status }}
                                         </span>
+
                                     </div>
                                     <div class="d-flex justify-content-end mt-2">
                                         <div class="action-buttons">
@@ -105,9 +109,10 @@
                                             </td>
                                             <td>
                                                 <span
-                                                    class="badge bg-{{ $invoice->payment_status == 'Lunas' ? 'success' : 'danger' }}">
+                                                    class="badge bg-{{ $invoice->payment_status == 'Pending' ? 'warning' : ($invoice->payment_status == 'Partial' ? 'info' : ($invoice->payment_status == 'Complete' ? 'success' : 'secondary')) }}">
                                                     {{ $invoice->payment_status }}
                                                 </span>
+
                                             </td>
                                             <td class="text-center">
                                                 <div class="action-buttons d-inline-flex">

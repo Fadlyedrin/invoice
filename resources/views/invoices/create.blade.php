@@ -33,7 +33,9 @@
                                 <div class="col-12 col-md-6 mb-3">
                                     <label class="form-label">Payment Status</label>
                                     <select name="payment_status" class="form-select" required>
-                                        <option value="Pending">Pending</option>
+                                        <option value="Pending">Belum Dibayar</option>
+                                        <option value="Partial">Pembayaran Sebagian</option>
+                                        <option value="Complete">Lunas</option>
                                     </select>
                                 </div>
                             </div>

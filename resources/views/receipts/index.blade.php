@@ -10,6 +10,9 @@
                         <h4 class="mb-0 mb-md-0">Receipts</h4>
                         <a href="{{ route('receipts.create') }}" class="btn btn-primary mt-2 mt-md-0">Add Receipt</a>
                     </div>
+                    <div id="alert">
+                        @include('components.alert')
+                    </div>
                     <div class="card-body px-2 px-sm-5 pt-0 pb-2">
                         <!-- Mobile view - card style -->
                         <div class="d-block d-md-none px-1">

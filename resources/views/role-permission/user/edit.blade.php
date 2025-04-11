@@ -42,10 +42,17 @@
                                             name="email" required>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    <div class="form-group position-relative">
                                         <label for="example-text-input" class="form-control-label">Password</label>
-                                        <input class="form-control" type="password" name="password">
+                                        <input id="password" class="form-control" type="password" name="password">
+
+                                        <!-- Ikon mata -->
+                                        <span onclick="togglePassword()"
+                                            style="position: absolute; top: 38px; right: 15px; cursor: pointer;">
+                                            <i id="togglePasswordIcon" class="fas fa-eye"></i>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -128,70 +135,64 @@
         @include('layouts.footers.auth.footer')
     </div>
 @endsection
-    <style>
+<style>
+    @media (max-width: 767px) {
+        .container-fluid {
+            padding-left: 0.1rem;
+            padding-right: 0.1rem;
+        }
 
+        .row.mx-1 {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
 
-        @media (max-width: 767px) {
-            .container-fluid {
-                padding-left: 0.1rem;
-                padding-right: 0.1rem;
-            }
+        .card-body {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }
 
-            .row.mx-1 {
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-            }
+        .invoice-card {
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+        }
 
-            .card-body {
-                padding-left: 0.5rem !important;
-                padding-right: 0.5rem !important;
-            }
+        .card-header {
+            padding: 1rem;
+            text-align: center;
+        }
 
-            .invoice-card {
-                margin-left: 0;
-                margin-right: 0;
-                width: 100%;
-            }
+        .btn-sm {
+            padding: 0.35rem 0.65rem;
+            font-size: 0.875rem;
+        }
 
-            .card-header {
-                padding: 1rem;
-                text-align: center;
-            }
+        /* Add extra margin to buttons on mobile */
+        .action-buttons .btn {
+            margin-right: 8px;
+        }
 
-            .btn-sm {
-                padding: 0.35rem 0.65rem;
-                font-size: 0.875rem;
-            }
+        .action-buttons .btn:last-child {
+            margin-right: 0;
+        }
+    }
+</style>
+@push('js')
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const icon = document.getElementById("togglePasswordIcon");
 
-            /* Add extra margin to buttons on mobile */
-            .action-buttons .btn {
-                margin-right: 8px;
-            }
-
-            .action-buttons .btn:last-child {
-                margin-right: 0;
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
             }
         }
-    </style>
-{{-- @push('js')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let branchType = document.getElementById("branch-type");
-            let branchFields = document.getElementById("branch-fields");
-
-            function toggleBranchFields() {
-                if (branchType.value === "Cabang") {
-                    branchFields.style.display = "block"; // Tampilkan form
-                } else {
-                    branchFields.style.display = "none"; // Sembunyikan form
-                }
-            }
-
-            // Jalankan saat halaman dimuat
-            toggleBranchFields();
-
-            // Jalankan saat dropdown diubah
-            branchType.addEventListener("change", toggleBranchFields);
-        });
     </script>
-@endpush --}}
+@endpush
