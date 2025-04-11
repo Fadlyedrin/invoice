@@ -41,23 +41,29 @@
                                     </div>
                                     <div class="d-flex justify-content-end mt-2">
                                         <div class="action-buttons">
-                                            <a href="{{ route('invoices.show', $invoice->id) }}"
-                                                class="btn btn-info btn-md me-2">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="{{ route('invoices.edit', $invoice->id) }}"
-                                                class="btn btn-warning btn-md me-2">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form action="{{ route('invoices.destroy', $invoice->id) }}" method="POST"
-                                                style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-md"
-                                                    onclick="return confirm('Are you sure?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
+                                            @can('approve invoices')
+                                                <a href="{{ route('invoices.show', $invoice->id) }}"
+                                                    class="btn btn-info btn-md me-2">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            @endcan
+                                            @can('update invoices')
+                                                <a href="{{ route('invoices.edit', $invoice->id) }}"
+                                                    class="btn btn-warning btn-md me-2">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            @endcan
+                                            @can('delete invoices')
+                                                <form action="{{ route('invoices.destroy', $invoice->id) }}" method="POST"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-md"
+                                                        onclick="return confirm('Are you sure?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </div>
                                     </div>
                                 </div>
@@ -68,7 +74,7 @@
                         <div class="table-responsive d-none d-md-block">
                             <table class="table table-striped align-items-center mb-0" id="dataTableInvoice">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No.</th>
                                         <th>Nama</th>
                                         <th>Invoice Number</th>
@@ -103,25 +109,31 @@
                                                     {{ $invoice->payment_status }}
                                                 </span>
                                             </td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <a href="{{ route('invoices.show', $invoice->id) }}"
-                                                        class="btn btn-info btn-sm me-1">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ route('invoices.edit', $invoice->id) }}"
-                                                        class="btn btn-warning btn-sm me-1">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <form action="{{ route('invoices.destroy', $invoice->id) }}"
-                                                        method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Are you sure?')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
+                                            <td class="text-center">
+                                                <div class="action-buttons d-inline-flex">
+                                                    @can('approve invoices')
+                                                        <a href="{{ route('invoices.show', $invoice->id) }}"
+                                                            class="btn btn-info btn-sm me-1">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('update invoices')
+                                                        <a href="{{ route('invoices.edit', $invoice->id) }}"
+                                                            class="btn btn-warning btn-sm me-1">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('delete invoices')
+                                                        <form action="{{ route('invoices.destroy', $invoice->id) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                                onclick="return confirm('Are you sure?')">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

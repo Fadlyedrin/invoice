@@ -38,18 +38,18 @@
                                     <div class="d-flex justify-content-end mt-2">
                                         <div class="action-buttons">
                                             <a href="{{ route('receipts.show', $receipt->id) }}"
-                                                class="btn btn-info btn-sm me-2" title="Lihat">
+                                                class="btn btn-info btn-md me-2" title="Lihat">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             <a href="{{ route('receipts.edit', $receipt->id) }}"
-                                                class="btn btn-warning btn-sm me-2" title="Edit">
+                                                class="btn btn-warning btn-md me-2" title="Edit">
                                                 <i class="fas fa-pencil-square"></i>
                                             </a>
                                             <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST"
                                                 class="d-inline"
                                                 onsubmit="return confirm('Yakin ingin menghapus receipt ini?')">
                                                 @csrf @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
+                                                <button type="submit" class="btn btn-danger btn-md" title="Hapus">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
@@ -63,7 +63,7 @@
                         <div class="table-responsive d-none d-md-block">
                             <table class="table table-striped align-items-center mb-0" id="dataTableReceipt">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>No.</th>
                                         <th>Nama</th>
                                         <th>Invoice</th>
@@ -77,7 +77,7 @@
                                     @foreach ($receipts as $receipt)
                                         <tr class="text-center">
                                             <td>{{ $loop->iteration }}</td>
-                                            <td >
+                                            <td>
                                                 @if ($receipt->invoice->creator)
                                                     {{ $receipt->invoice->creator->username }}
                                                 @else
@@ -93,7 +93,7 @@
                                                     {{ $receipt->status }}
                                                 </span>
                                             </td>
-                                            <td class="text-center">
+                                            <td class="text-center ">
                                                 <div class="action-buttons d-inline-flex">
                                                     <a href="{{ route('receipts.show', $receipt->id) }}"
                                                         class="btn btn-sm btn-info me-1" title="Lihat">

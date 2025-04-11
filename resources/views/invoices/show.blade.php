@@ -78,8 +78,6 @@
 @endsection
 @push('css')
     <style>
-
-
         @media (max-width: 767px) {
             .container-fluid {
                 padding-left: 0.1rem;

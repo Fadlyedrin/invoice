@@ -32,8 +32,8 @@
                                             @error('password') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                                         </div>
                                         <div class="flex flex-col mb-3">
-                                            <input type="password" name="confirm-password" class="form-control form-control-lg" placeholder="Password" aria-label="Password"  >
-                                            @error('confirm-password') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                                            <input type="password" name="password_confirmation" class="form-control form-control-lg" placeholder="Password Confirmation" aria-label="Password"  >
+                                            @error('password_confirmation') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                                         </div>
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Send Reset Link</button>

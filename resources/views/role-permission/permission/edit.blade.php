@@ -13,7 +13,7 @@
                     <div class="card-body pt-0 pb-2 px-3 px-sm-5">
                         <form action="{{ url('permissions/'.$permission->id) }}" method="POST">
                             @csrf
-
+                            @method('PUT')
                             <div class="mb-3">
                                 <label for="permission_name" class="form-label">Permission Name</label>
                                 <input type="text" id="permission_name" name="name" value="{{ $permission->name }}" class="form-control" />

@@ -108,15 +108,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select id="cars">
-                                        <option value="Pusat">Pusat</option>
-                                        <option value="Cabang">Cabang</option>
-
-                                    </select>
-                                </div>
-                            </div>
                             <hr class="horizontal dark">
                             {{-- <div class="row">
                                 <div class="col-md-12">

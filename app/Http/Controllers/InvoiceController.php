@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
-    // CRUD Resource Methods
-    // public function index()
-    // {
-    //     $userId = Auth::user()->id;
-    //     $invoices = Invoice::with('items')->where('created_by', $userId)->latest()->get();
-    //     $invoices = Invoice::with('items')->latest()->get();
-    //     return view('invoices.index', compact('invoices'));
-    // }
+public function __construct()
+{
 
+    $this->middleware('permission:invoices')->only(['index']);
+    $this->middleware('permission:create invoices')->only(['create', 'store']);
+    $this->middleware('permission:update invoices')->only(['edit', 'update']);
+    $this->middleware('permission:delete invoices')->only(['destroy']);
+    $this->middleware('permission:approve invoices')->only(['show']);
+}
 public function index()
 {
     $user = Auth::user();
