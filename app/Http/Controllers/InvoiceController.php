@@ -222,9 +222,9 @@ public function store(Request $request)
         $creatorEmail = optional($invoice->creator)->email;
         $approverEmail = optional($actionBy)->email;
 
-        $recipients = collect([$creatorEmail, $approverEmail])->filter();
+        $receipients = collect([$creatorEmail, $approverEmail])->filter();
 
-        foreach ($recipients as $email) {
+        foreach ($receipients as $email) {
             Mail::to($email)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status));
         }
     }
