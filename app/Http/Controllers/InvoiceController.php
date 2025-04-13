@@ -171,6 +171,7 @@ public function store(Request $request)
         return redirect()->route('invoices.index')->with('success', 'Invoice deleted successfully');
     }
 
+    //new
     public function approve(Request $request, Invoice $invoice)
     {
         if (!in_array($invoice->status, ['Draft', 'Menunggu Approval'])) {
@@ -182,14 +183,18 @@ public function store(Request $request)
         ]);
 
         $invoice->status = 'Disetujui';
-        $invoice->draft_data = ['approval_reason' => $request->reason];
+        $invoice->draft_data = [
+            'approval_reason' => $request->reason,
+            'approved_by' => auth()->user()->name
+        ];
         $invoice->save();
 
-        $this->sendStatusChangeEmail($invoice, 'approved');
+        $this->sendStatusChangeEmail($invoice, 'approved', auth()->user());
 
         return redirect()->back()->with('success', 'Invoice disetujui.');
     }
-
+    
+    //new
     public function reject(Request $request, Invoice $invoice)
     {
         if (!in_array($invoice->status, ['Draft', 'Menunggu Approval'])) {
@@ -201,23 +206,29 @@ public function store(Request $request)
         ]);
 
         $invoice->status = 'Ditolak';
-        $invoice->draft_data = ['rejection_reason' => $request->reason];
+        $invoice->draft_data = [
+            'rejection_reason' => $request->reason
+        ];
         $invoice->save();
 
-        $this->sendStatusChangeEmail($invoice, 'rejected');
+        $this->sendStatusChangeEmail($invoice, 'rejected', auth()->user());
 
         return redirect()->back()->with('success', 'Invoice ditolak.');
     }
+    
+    //new
+    private function sendStatusChangeEmail(Invoice $invoice, $status, $actionBy = null)
+    {
+        $creatorEmail = optional($invoice->creator)->email;
+        $approverEmail = optional($actionBy)->email;
 
+        $recipients = collect([$creatorEmail, $approverEmail])->filter();
 
-     private function sendStatusChangeEmail(Invoice $invoice, $status)
-     {
-         $recipient = optional($invoice->creator)->email;
+        foreach ($recipients as $email) {
+            Mail::to($email)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status));
+        }
+    }
 
-         if ($recipient) {
-             Mail::to($recipient)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status));
-         }
-     }
 
      public function download(Invoice $invoice)
      {
