@@ -217,18 +217,19 @@ public function store(Request $request)
     }
     
     //new
-    private function sendStatusChangeEmail(Invoice $invoice, $status, $actionBy = null)
+    private function sendStatusChangeEmail(Invoice $invoice, $status, $actor = null)
     {
         $creatorEmail = optional($invoice->creator)->email;
-        $approverEmail = optional($actionBy)->email;
 
-        $receipients = collect([$creatorEmail, $approverEmail])->filter();
+        if ($creatorEmail) {
+            Mail::to($creatorEmail)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status));
+        }
 
-        foreach ($receipients as $email) {
-            Mail::to($email)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status));
+        if ($actor && $actor->email) {
+            // Kirim juga ke admin pusat yang mencet approve
+            Mail::to($actor->email)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status));
         }
     }
-
 
      public function download(Invoice $invoice)
      {
