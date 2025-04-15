@@ -103,7 +103,7 @@
         @endif
         
         @if($actor)
-            <p>Diproses oleh: {{ $actor->name }}</p>
+            <p>Diproses oleh: {{ $actor->username }}</p>
         @endif
         
         <h3>Detail Invoice</h3>
@@ -184,7 +184,7 @@
     
     <div class="footer">
         <p>Email ini dikirim otomatis oleh sistem. Mohon tidak membalas email ini.</p>
-        <p>&copy; {{ date('Y') }} {{ config('app.name') }}</p>
+        <p>&copy; {{ date('Y') }}</p>
     </div>
 </body>
 </html>

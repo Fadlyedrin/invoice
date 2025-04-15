@@ -88,7 +88,7 @@
         @endif
         
         @if($actor)
-            <p>Diproses oleh: {{ $actor->name }}</p>
+            <p>Diproses oleh: {{ $actor->username }}</p>
         @endif
         
         <h3>Detail Receipt</h3>
