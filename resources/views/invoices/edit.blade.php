@@ -17,18 +17,34 @@
                             <div class="row">
                                 <div class="col-12 col-md-4 mb-3">
                                     <label>No. Invoice</label>
-                                    <input type="text" class="form-control" value="{{ $invoice->invoice_number }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $invoice->invoice_number }}"
+                                        readonly>
                                 </div>
                                 <div class="col-12 col-md-4 mb-3">
                                     <label>Status</label>
-                                    <input type="text" class="form-control" value="{{ $invoice->status }}" readonly disabled>
+                                    <input type="text" class="form-control" value="{{ $invoice->status }}" readonly
+                                        disabled>
                                 </div>
                                 <div class="col-12 col-md-4 mb-3">
                                     <label>Payment Status</label>
-                                    <input type="text" class="form-control" value="{{ $invoice->payment_status }}" readonly disabled>
+                                    <input type="text" class="form-control" value="{{ $invoice->payment_status }}"
+                                        readonly disabled>
                                 </div>
                             </div>
-
+                            <!-- Tambahkan checkbox untuk mengubah status disini -->
+                            @if ($invoice->status === 'Ditolak')
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="change_status"
+                                                id="change_status" value="1">
+                                            <label class="form-check-label" for="change_status">
+                                                Ubah status menjadi "Menunggu Approval" untuk diajukan kembali
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                             <input type="hidden" name="status" value="{{ $invoice->status }}">
                             <input type="hidden" name="payment_status" value="{{ $invoice->payment_status }}">
 
@@ -57,12 +73,14 @@
                                                 </div>
                                                 <div class="col-6 col-md-2">
                                                     <input type="number" name="items[{{ $index }}][quantity]"
-                                                        class="form-control quantity" value="{{ $item->quantity }}" required>
+                                                        class="form-control quantity" value="{{ $item->quantity }}"
+                                                        required>
                                                 </div>
                                                 <div class="col-6 col-md-3">
                                                     <input type="number" step="0.01"
                                                         name="items[{{ $index }}][price_per_item]"
-                                                        class="form-control price" value="{{ $item->price_per_item }}" required>
+                                                        class="form-control price" value="{{ $item->price_per_item }}"
+                                                        required>
                                                 </div>
                                                 <div class="col-6 col-md-2">
                                                     <input type="number" step="0.01" class="form-control total"
@@ -92,8 +110,6 @@
 @endsection
 @push('css')
     <style>
-
-
         @media (max-width: 767px) {
             .container-fluid {
                 padding-left: 0.1rem;
@@ -158,25 +174,25 @@
         document.getElementById('addItem').addEventListener('click', function() {
             itemCount++;
             const html = `
-        <div class="row item-row mb-3">
-            <div class="col-md-4">
-                <input type="text" name="items[${itemCount}][item_name]" class="form-control" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" name="items[${itemCount}][quantity]" class="form-control quantity" required>
-            </div>
-            <div class="col-md-3">
-                <input type="number" step="0.01" name="items[${itemCount}][price_per_item]" class="form-control price" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" step="0.01" class="form-control total" readonly>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-danger btn-sm remove-item">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        </div>`;
+        <div class="row item-row g-2 mb-3">
+    <div class="col-12 col-sm-6 col-md-4">
+        <input type="text" name="items[${itemCount}][item_name]" class="form-control" placeholder="Item Name" required>
+    </div>
+    <div class="col-6 col-sm-3 col-md-2">
+        <input type="number" name="items[${itemCount}][quantity]" class="form-control quantity" placeholder="Quantity" required>
+    </div>
+    <div class="col-6 col-sm-3 col-md-3">
+        <input type="number" step="0.01" name="items[${itemCount}][price_per_item]" class="form-control price" placeholder="Price per Item" required>
+    </div>
+    <div class="col-6 col-sm-4 col-md-2">
+        <input type="number" step="0.01" name="items[${itemCount}][total_price]" class="form-control total" placeholder="Total" readonly>
+    </div>
+    <div class="col-6 col-sm-2 col-md-1 d-flex align-items-center">
+        <button type="button" class="btn btn-danger btn-sm remove-item">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+</div>`;
             document.getElementById('itemsContainer').insertAdjacentHTML('beforeend', html);
         });
 

@@ -14,7 +14,19 @@
                         <form action="{{ route('receipts.update', $receipt->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-
+                            @if ($receipt->status === 'Ditolak')
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="change_status"
+                                                id="change_status" value="1">
+                                            <label class="form-check-label" for="change_status">
+                                                Ubah status menjadi "Menunggu Approval" untuk diajukan kembali
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="mb-3">
                                 <label for="invoice_id" class="form-label">Pilih Invoice</label>
                                 <select name="invoice_id" id="invoice_id" class="form-select" readonly disabled>
@@ -43,9 +55,15 @@
                             <div class="mb-3">
                                 <label for="payment_status" class="form-label">Status Pembayaran Invoice</label>
                                 <select name="payment_status" id="payment_status" class="form-select" required>
-                                    <option value="Pending" {{ $receipt->invoice->payment_status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                                    <option value="Partial" {{ $receipt->invoice->payment_status == 'Partial' ? 'selected' : '' }}>Partial</option>
-                                    <option value="Complete" {{ $receipt->invoice->payment_status == 'Complete' ? 'selected' : '' }}>Complete</option>
+                                    <option value="Pending"
+                                        {{ $receipt->invoice->payment_status == 'Pending' ? 'selected' : '' }}>Pending
+                                    </option>
+                                    <option value="Partial"
+                                        {{ $receipt->invoice->payment_status == 'Partial' ? 'selected' : '' }}>Partial
+                                    </option>
+                                    <option value="Complete"
+                                        {{ $receipt->invoice->payment_status == 'Complete' ? 'selected' : '' }}>Complete
+                                    </option>
                                 </select>
                                 @error('payment_status')
                                     <div class="text-danger">{{ $message }}</div>
@@ -56,9 +74,14 @@
                                 <label for="payment_method" class="form-label">Metode Pembayaran</label>
                                 <select name="payment_method" id="payment_method" class="form-select" required>
                                     <option value="">-- Pilih Metode --</option>
-                                    <option value="Cash" {{ $receipt->payment_method == 'Cash' ? 'selected' : '' }}>Cash</option>
-                                    <option value="Credit Card" {{ $receipt->payment_method == 'Credit Card' ? 'selected' : '' }}>Credit Card</option>
-                                    <option value="Bank Transfer" {{ $receipt->payment_method == 'Bank Transfer' ? 'selected' : '' }}>Bank Transfer</option>
+                                    <option value="Cash" {{ $receipt->payment_method == 'Cash' ? 'selected' : '' }}>Cash
+                                    </option>
+                                    <option value="Credit Card"
+                                        {{ $receipt->payment_method == 'Credit Card' ? 'selected' : '' }}>Credit Card
+                                    </option>
+                                    <option value="Bank Transfer"
+                                        {{ $receipt->payment_method == 'Bank Transfer' ? 'selected' : '' }}>Bank Transfer
+                                    </option>
                                 </select>
                                 @error('payment_method')
                                     <div class="text-danger">{{ $message }}</div>
@@ -87,8 +110,6 @@
 @endsection
 @push('css')
     <style>
-
-
         @media (max-width: 767px) {
             .container-fluid {
                 padding-left: 0.1rem;

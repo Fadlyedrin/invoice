@@ -90,8 +90,6 @@
 
 @push('css')
     <style>
-
-
         @media (max-width: 767px) {
             .container-fluid {
                 padding-left: 0.1rem;
@@ -136,47 +134,48 @@
     </style>
 @endpush
 @push('js')
-        <script>
-            let itemCount = 0;
+    <script>
+        let itemCount = 0;
 
-            document.getElementById('addItem').addEventListener('click', function() {
-                itemCount++;
-                const newItem = `<div class="row item-row mb-3">
-            <div class="col-md-4">
-                <input type="text" name="items[${itemCount}][item_name]" class="form-control" placeholder="Item Name" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" name="items[${itemCount}][quantity]" class="form-control quantity" placeholder="Quantity" required>
-            </div>
-            <div class="col-md-3">
-                <input type="number" step="0.01" name="items[${itemCount}][price_per_item]" class="form-control price" placeholder="Price per Item" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" step="0.01" name="items[${itemCount}][total_price]" class="form-control total" placeholder="Total" readonly>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-danger btn-sm remove-item">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        </div>`;
-                document.getElementById('itemsContainer').insertAdjacentHTML('beforeend', newItem);
-            });
+        document.getElementById('addItem').addEventListener('click', function() {
+            itemCount++;
+            const newItem = `<div class="row item-row g-2 mb-3">
+    <div class="col-12 col-sm-6 col-md-4">
+        <input type="text" name="items[${itemCount}][item_name]" class="form-control" placeholder="Item Name" required>
+    </div>
+    <div class="col-6 col-sm-3 col-md-2">
+        <input type="number" name="items[${itemCount}][quantity]" class="form-control quantity" placeholder="Quantity" required>
+    </div>
+    <div class="col-6 col-sm-3 col-md-3">
+        <input type="number" step="0.01" name="items[${itemCount}][price_per_item]" class="form-control price" placeholder="Price per Item" required>
+    </div>
+    <div class="col-6 col-sm-4 col-md-2">
+        <input type="number" step="0.01" name="items[${itemCount}][total_price]" class="form-control total" placeholder="Total" readonly>
+    </div>
+    <div class="col-6 col-sm-2 col-md-1 d-flex align-items-center">
+        <button type="button" class="btn btn-danger btn-sm remove-item">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+</div>
+`;
+            document.getElementById('itemsContainer').insertAdjacentHTML('beforeend', newItem);
+        });
 
-            document.getElementById('itemsContainer').addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove-item')) {
-                    e.target.closest('.item-row').remove();
-                }
-            });
+        document.getElementById('itemsContainer').addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-item')) {
+                e.target.closest('.item-row').remove();
+            }
+        });
 
-            document.getElementById('itemsContainer').addEventListener('input', function(e) {
-                if (e.target.classList.contains('quantity') || e.target.classList.contains('price')) {
-                    const row = e.target.closest('.item-row');
-                    const quantity = row.querySelector('.quantity').value;
-                    const price = row.querySelector('.price').value;
-                    const total = row.querySelector('.total');
-                    total.value = (quantity * price).toFixed(2);
-                }
-            });
-        </script>
-    @endpush
+        document.getElementById('itemsContainer').addEventListener('input', function(e) {
+            if (e.target.classList.contains('quantity') || e.target.classList.contains('price')) {
+                const row = e.target.closest('.item-row');
+                const quantity = row.querySelector('.quantity').value;
+                const price = row.querySelector('.price').value;
+                const total = row.querySelector('.total');
+                total.value = (quantity * price).toFixed(2);
+            }
+        });
+    </script>
+@endpush

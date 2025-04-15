@@ -104,8 +104,8 @@
                                     <form action="{{ route('receipts.reject', $receipt->id) }}" method="POST">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="rejection_reason" class="form-label">Alasan Penolakan</label>
-                                            <textarea name="rejection_reason" class="form-control" required minlength="10"
+                                            <label for="reason" class="form-label">Alasan Penolakan</label>
+                                            <textarea name="reason" class="form-control" required minlength="10"
                                                 placeholder="Contoh: Bukti pembayaran tidak valid..."></textarea>
                                         </div>
                                         <button type="submit" class="btn btn-danger w-100">Reject</button>

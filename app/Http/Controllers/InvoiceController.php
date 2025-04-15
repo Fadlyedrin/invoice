@@ -110,61 +110,67 @@ public function store(Request $request)
     public function edit(Invoice $invoice)
     {
         // Only allow editing if status is Draft or Menunggu Approval
-        if (!in_array($invoice->status, ['Draft', 'Menunggu Approval'])) {
-            return redirect()->back()->with('error', 'Cannot edit invoice in current status.');
+        if (!in_array($invoice->status, ['Draft', 'Menunggu Approval', 'Ditolak'])) {
+            return redirect()->back()->with('error', 'Invoice tidak dapat diubah karena status-nya sudah final.');
         }
 
         return view('invoices.edit', compact('invoice'));
     }
 
     public function update(Request $request, Invoice $invoice)
-    {
-        // Batasi update hanya jika status masih Draft / Menunggu Approval
-        if (!in_array($invoice->status, ['Draft', 'Menunggu Approval'])) {
-            return redirect()->back()->with('error', 'Invoice tidak bisa diubah pada status ini.');
-        }
-
-        $request->validate([
-            'items' => 'required|array|min:1',
-            'items.*.item_name' => 'required|string',
-            'items.*.quantity' => 'required|numeric|min:1',
-            'items.*.price_per_item' => 'required|numeric|min:0',
-        ]);
-
-        // Hitung ulang total amount
-        $totalAmount = 0;
-        foreach ($request->items as $item) {
-            $totalAmount += $item['quantity'] * $item['price_per_item'];
-        }
-
-        $oldStatus = $invoice->status;
-
-        // Update hanya amount
-        $invoice->update([
-            'amount' => $totalAmount,
-        ]);
-
-        // Hapus semua item lama
-        $invoice->items()->delete();
-
-        // Simpan item baru
-        foreach ($request->items as $item) {
-            $invoice->items()->create([
-                'item_name' => $item['item_name'],
-                'quantity' => $item['quantity'],
-                'price_per_item' => $item['price_per_item'],
-                'total_price' => $item['quantity'] * $item['price_per_item'],
-            ]);
-        }
-
-        // Kirim email kalau status berubah (backup)
-        if ($oldStatus !== $invoice->status) {
-            $this->sendStatusChangeEmail($invoice, 'status_changed');
-        }
-
-        return redirect()->route('invoices.index')->with('success', 'Invoice berhasil diperbarui.');
+{
+    // Allow updates if status is Draft, Menunggu Approval, or Ditolak
+    if (!in_array($invoice->status, ['Draft', 'Menunggu Approval', 'Ditolak'])) {
+        return redirect()->back()->with('error', 'Invoice tidak dapat diubah karena status-nya sudah final.');
     }
 
+    $request->validate([
+        'items' => 'required|array|min:1',
+        'items.*.item_name' => 'required|string',
+        'items.*.quantity' => 'required|numeric|min:1',
+        'items.*.price_per_item' => 'required|numeric|min:0',
+        'change_status' => 'sometimes|boolean', // Tambahkan validasi untuk checkbox perubahan status
+    ]);
+
+    // Hitung ulang total amount
+    $totalAmount = 0;
+    foreach ($request->items as $item) {
+        $totalAmount += $item['quantity'] * $item['price_per_item'];
+    }
+
+    $oldStatus = $invoice->status;
+    
+    // Jika invoice berstatus Ditolak dan ada permintaan untuk mengubah statusnya
+    if ($invoice->status === 'Ditolak' && $request->change_status) {
+        $invoice->status = 'Menunggu Approval';
+    }
+
+    // Update invoice data
+    $invoice->update([
+        'amount' => $totalAmount,
+        'status' => $invoice->status, // Gunakan status yang mungkin sudah diupdate di atas
+    ]);
+
+    // Hapus semua item lama
+    $invoice->items()->delete();
+
+    // Simpan item baru
+    foreach ($request->items as $item) {
+        $invoice->items()->create([
+            'item_name' => $item['item_name'],
+            'quantity' => $item['quantity'],
+            'price_per_item' => $item['price_per_item'],
+            'total_price' => $item['quantity'] * $item['price_per_item'],
+        ]);
+    }
+
+    // Kirim email kalau status berubah
+    if ($oldStatus !== $invoice->status) {
+        $this->sendStatusChangeEmail($invoice, 'status_changed');
+    }
+
+    return redirect()->route('invoices.index')->with('success', 'Invoice berhasil diperbarui.');
+}
 
     public function destroy(Invoice $invoice)
     {

@@ -72,6 +72,11 @@ public function index()
 
     public function edit(Receipt $receipt)
 {
+    // Izinkan juga status 'Ditolak' untuk bisa diedit
+    if (!in_array($receipt->status, ['Draft', 'Menunggu Approval', 'Ditolak'])) {
+        return redirect()->back()->with('error', 'Receipt tidak dapat diubah karena status-nya sudah final.');
+    }
+
     // Hanya invoice yang disetujui & milik user, tapi tetap tampilkan invoice milik receipt ini
     $invoices = Invoice::where('created_by', auth()->id())
         ->where('status', 'Disetujui')
@@ -83,7 +88,8 @@ public function index()
 
 public function update(Request $request, Receipt $receipt)
 {
-    if (!in_array($receipt->status, ['Draft', 'Menunggu Approval'])) {
+    // Izinkan juga status 'Ditolak' untuk bisa diupdate
+    if (!in_array($receipt->status, ['Draft', 'Menunggu Approval', 'Ditolak'])) {
         return redirect()->back()->with('error', 'Receipt tidak dapat diubah karena status-nya sudah final.');
     }
 
@@ -92,12 +98,19 @@ public function update(Request $request, Receipt $receipt)
         'payment_method' => 'required|in:Cash,Credit Card,Bank Transfer',
         'payment_date' => 'required|date',
         'payment_status' => 'required|in:Pending,Partial,Complete',
+        'change_status' => 'sometimes|boolean', // Tambahkan validasi untuk checkbox perubahan status
     ]);
+
+    // Jika receipt berstatus Ditolak dan ada permintaan untuk mengubah statusnya
+    if ($receipt->status === 'Ditolak' && $request->change_status) {
+        $receipt->status = 'Menunggu Approval';
+    }
 
     $receipt->update([
         'amount_paid' => $request->amount_paid,
         'payment_method' => $request->payment_method,
         'payment_date' => $request->payment_date,
+        'status' => $receipt->status, // Gunakan status yang mungkin sudah diupdate di atas
     ]);
 
     // update juga status invoice
@@ -107,7 +120,6 @@ public function update(Request $request, Receipt $receipt)
 
     return redirect()->route('receipts.index')->with('success', 'Receipt berhasil diperbarui.');
 }
-
 
     public function show(Receipt $receipt)
     {
