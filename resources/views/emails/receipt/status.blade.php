@@ -13,6 +13,10 @@
     <p><strong>Alasan Ditolak:</strong> {{ $receipt->draft_data['rejection_reason'] }}</p>
 @endif
 
+@if($actor)
+*Perubahan dilakukan oleh*: {{ $actor->name }} ({{ $actor->email }})
+@endif
+
 <p><a href="{{ route('receipts.show', $receipt->id) }}">Lihat Detail Receipt</a></p>
 
 @if($receipt->status === 'Disetujui')

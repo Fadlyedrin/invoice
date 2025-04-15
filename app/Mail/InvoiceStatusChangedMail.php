@@ -15,17 +15,18 @@ class InvoiceStatusChangedMail extends Mailable
 
     public $invoice;
     public $status;
+    public $actor;
     public $qrCodePath;
 
-    public function __construct(Invoice $invoice, $status)
+    public function __construct(Invoice $invoice, $status, $actor = null)
     {
         $this->invoice = $invoice;
         $this->status = $status;
+        $this->actor = $actor;
 
-        // Generate QR Code dan simpan ke storage sementara
+        // QR Code
         $pdfUrl = route('invoices.download', $this->invoice->id);
         $qrCode = QrCode::format('png')->size(200)->generate($pdfUrl);
-
         $this->qrCodePath = 'qrcodes/invoice-' . $invoice->id . '.png';
         Storage::disk('public')->put($this->qrCodePath, $qrCode);
     }
@@ -38,6 +39,7 @@ class InvoiceStatusChangedMail extends Mailable
                         'invoice' => $this->invoice,
                         'status' => $this->status,
                         'qrCodeUrl' => asset('storage/' . $this->qrCodePath),
+                        'actor' => $this->actor,
                     ])
                     ->attach(storage_path('app/public/' . $this->qrCodePath), [
                         'as' => 'qrcode-invoice.png',

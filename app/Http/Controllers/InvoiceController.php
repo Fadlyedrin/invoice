@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InvoiceStatusChangedMail;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -171,8 +172,7 @@ public function store(Request $request)
         return redirect()->route('invoices.index')->with('success', 'Invoice deleted successfully');
     }
 
-    //new
-    public function approve(Request $request, Invoice $invoice)
+public function approve(Request $request, Invoice $invoice)
     {
         if (!in_array($invoice->status, ['Draft', 'Menunggu Approval'])) {
             return redirect()->back()->with('error', 'Invoice tidak dapat disetujui karena status-nya sudah final.');
@@ -183,18 +183,14 @@ public function store(Request $request)
         ]);
 
         $invoice->status = 'Disetujui';
-        $invoice->draft_data = [
-            'approval_reason' => $request->reason,
-            'approved_by' => auth()->user()->name
-        ];
+        $invoice->draft_data = ['approval_reason' => $request->reason];
         $invoice->save();
 
         $this->sendStatusChangeEmail($invoice, 'approved', auth()->user());
 
         return redirect()->back()->with('success', 'Invoice disetujui.');
     }
-    
-    //new
+
     public function reject(Request $request, Invoice $invoice)
     {
         if (!in_array($invoice->status, ['Draft', 'Menunggu Approval'])) {
@@ -206,28 +202,31 @@ public function store(Request $request)
         ]);
 
         $invoice->status = 'Ditolak';
-        $invoice->draft_data = [
-            'rejection_reason' => $request->reason
-        ];
+        $invoice->draft_data = ['rejection_reason' => $request->reason];
         $invoice->save();
 
         $this->sendStatusChangeEmail($invoice, 'rejected', auth()->user());
 
         return redirect()->back()->with('success', 'Invoice ditolak.');
     }
-    
-    //new
+
+
     private function sendStatusChangeEmail(Invoice $invoice, $status, $actor = null)
     {
-        $creatorEmail = optional($invoice->creator)->email;
+        $recipients = [];
 
-        if ($creatorEmail) {
-            Mail::to($creatorEmail)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status));
+        // Creator email
+        if ($invoice->creator && $invoice->creator->email) {
+            $recipients[] = $invoice->creator->email;
         }
 
-        if ($actor && $actor->email) {
-            // Kirim juga ke admin pusat yang mencet approve
-            Mail::to($actor->email)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status));
+        // Actor email (yang mencet approve/reject)
+        if ($actor && $actor->email && $actor->id !== optional($invoice->creator)->id) {
+            $recipients[] = $actor->email;
+        }
+
+        foreach ($recipients as $email) {
+            Mail::to($email)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status, $actor));
         }
     }
 

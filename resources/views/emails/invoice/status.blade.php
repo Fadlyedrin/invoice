@@ -12,9 +12,9 @@ Status saat ini: *{{ $invoice->status }}*
 **Alasan Ditolak**: {{ $invoice->draft_data['rejection_reason'] }}
 @endisset
 
-@isset($invoice->draft_data['approved_by'])
-**Disetujui oleh:** {{ $invoice->draft_data['approved_by'] }}
-@endisset
+@if($actor)
+*Perubahan dilakukan oleh*: {{ $actor->name }} ({{ $actor->email }})
+@endif
 
 @component('mail::button', ['url' => route('invoices.show', $invoice->id)])
 Lihat Invoice

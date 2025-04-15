@@ -113,7 +113,7 @@ public function update(Request $request, Receipt $receipt)
     {
         return view('receipts.show', compact('receipt'));
     }
-    public function approve(Request $request, Receipt $receipt)
+public function approve(Request $request, Receipt $receipt)
     {
         if (!in_array($receipt->status, ['Draft', 'Menunggu Approval'])) {
             return redirect()->back()->with('error', 'Receipt tidak dapat disetujui karena status-nya sudah final.');
@@ -127,7 +127,7 @@ public function update(Request $request, Receipt $receipt)
         $receipt->draft_data = ['approval_reason' => $request->reason];
         $receipt->save();
 
-        $this->sendStatusChangeEmail($receipt, 'approved');
+        $this->sendStatusChangeEmail($receipt, 'approved', auth()->user());
 
         return redirect()->route('receipts.index')->with('success', 'Receipt disetujui.');
     }
@@ -146,17 +146,27 @@ public function update(Request $request, Receipt $receipt)
         $receipt->draft_data = ['rejection_reason' => $request->reason];
         $receipt->save();
 
-        $this->sendStatusChangeEmail($receipt, 'rejected');
+        $this->sendStatusChangeEmail($receipt, 'rejected', auth()->user());
 
         return redirect()->route('receipts.index')->with('success', 'Receipt ditolak.');
     }
 
-    private function sendStatusChangeEmail(Receipt $receipt, $status)
+    private function sendStatusChangeEmail(Receipt $receipt, $status, $actor = null)
     {
-        $recipient = optional($receipt->invoice->creator)->email;
+        $recipients = [];
 
-        if ($recipient) {
-            Mail::to($recipient)->send(new ReceiptStatusChangedMail($receipt, $status));
+        // Creator dari invoice
+        if ($receipt->invoice && $receipt->invoice->creator && $receipt->invoice->creator->email) {
+            $recipients[] = $receipt->invoice->creator->email;
+        }
+
+        // Admin yang approve/reject
+        if ($actor && $actor->email && $actor->id !== optional($receipt->invoice->creator)->id) {
+            $recipients[] = $actor->email;
+        }
+
+        foreach ($recipients as $email) {
+            Mail::to($email)->send(new ReceiptStatusChangedMail($receipt, $status, $actor));
         }
     }
 
