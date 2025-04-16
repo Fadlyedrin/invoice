@@ -16,7 +16,7 @@ class PermissionController extends Controller
     }
     public function index(){
 
-        $permissions = Permission::get();
+        $permissions = Permission::orderBy('name')->get();
         return view('role-permission.permission.index', compact('permissions'));
     }
     public function create(){

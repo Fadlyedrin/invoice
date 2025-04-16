@@ -83,4 +83,22 @@ class RoleController extends Controller
         $role->syncPermissions($request->permission);
         return redirect('roles')->with('success', 'Permision added to role successfully');
     }
+    public function show($id)
+{
+    $role = Role::findOrFail($id);
+    $permissions = Permission::orderBy('name')->get();
+    
+    // Mengelompokkan permission
+    $groupedPermissions = $permissions->groupBy(function($permission) {
+        $parts = explode(' ', $permission->name);
+        if (count($parts) > 1) {
+            return end($parts); // Resource sebagai kategori (users, roles, dll)
+        } else {
+            return $permission->name;
+        }
+    });
+    
+    return view('role-permission.role.show', compact('role', 'groupedPermissions'));
 }
+}
+

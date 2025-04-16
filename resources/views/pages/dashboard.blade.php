@@ -3,86 +3,216 @@
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Dashboard'])
     <div class="container-fluid py-4">
-        <div class="row">
-            <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Money</p>
-                                    <h5 class="font-weight-bolder">
-                                        $53,000
-                                    </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+55%</span>
-                                        since yesterday
-                                    </p>
-                                </div>
+@role('admin pusat')
+    <div class="row">
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Total User</p>
+                                <h5 class="font-weight-bolder mt-1">
+                                    {{ $totalUsers }}
+                                </h5>
+                                <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">
+                                        <a href="{{ url('users') }}">View Details</a>
+                                    </span>
+                                </p>
                             </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Users</p>
-                                    <h5 class="font-weight-bolder">
-                                        2,300
-                                    </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+3%</span>
-                                        since last week
-                                    </p>
-                                </div>
+        </div>
+
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Invoice</p>
+                                <h5 class="font-weight-bolder mt-1">
+                                    {{ $totalInvoice }}
+                                </h5>
+                                <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">
+                                        <a href="{{ url('invoices') }}">View Details</a>
+                                    </span>
+                                </p>
                             </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">New Clients</p>
-                                    <h5 class="font-weight-bolder">
-                                        +3,462
-                                    </h5>
-                                    <p class="mb-0">
-                                        <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                                        since last quarter
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
+        </div>
+
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Receipt</p>
+                                <h5 class="font-weight-bolder mt-1">
+                                    {{ $totalReceipt }}
+                                </h5>
+                                <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">
+                                        <a href="{{ url('receipts') }}">View Details</a>
+                                    </span>
+                                </p>
                             </div>
                         </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endrole
+
+        <!-- resources/views/dashboard/index.blade.php -->
+<div class="row mt-4">
+            <div class="col-lg-6 mb-lg-0 mb-4" style="margin-top: 5%">
+                <div class="card ">
+                    <div class="card-header pb-0 p-3">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-2">🧾 Aktivitas Invoice Terbaru</h6>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">No.</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">User</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Invoice</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Status</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Tanggal</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($invoiceActivities as $invoice)
+                                    <tr class="text-center">
+                                        <td class="text-sm">{{ $loop->iteration }}</td>
+                                        <td class="text-sm">
+                                            {{ $invoice->creator->username ?? 'Unknown' }}
+                                        </td>
+                                        <td class="text-sm">
+                                            <strong>{{ $invoice->invoice_number }}</strong>
+                                        </td>
+                                        <td class="text-sm">
+                                            @if ($invoice->status == 'Draft' || $invoice->status == 'Menunggu Approval')
+                                                <span class="badge bg-warning">Menunggu Approval</span>
+                                            @elseif ($invoice->status == 'Disetujui')
+                                                <span class="badge bg-success">Disetujui</span>
+                                            @elseif ($invoice->status == 'Ditolak')
+                                                <span class="badge bg-danger">Ditolak</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-sm text-muted">
+                                            {{ $invoice->created_at->diffForHumans() }}
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('invoices.show', $invoice->id) }}"
+                                                class="btn btn-sm btn-outline-primary">
+                                                Lihat
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">Tidak ada aktivitas terbaru.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6 mb-lg-0 mb-4" style="margin-top: 5%">
+                <div class="card">
+                    <div class="card-header pb-0 p-3">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-2">🧾 Aktivitas Receipt Terbaru</h6>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">No.</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">User</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Receipt</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Status</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Tanggal</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($receiptActivities as $receipt)
+                                    <tr class="text-center">
+                                        <td class="text-sm">{{ $loop->iteration }}</td>
+                                        <td class="text-sm">
+                                            {{ $receipt->invoice->creator->username ?? 'Unknown' }}
+                                        </td>
+                                        <td class="text-sm">
+                                            <strong>{{ $receipt->invoice->invoice_number ?? 'Unknown' }}</strong>
+                                        </td>
+                                        <td class="text-sm">
+                                            @if ($receipt->status == 'Draft' || $receipt->status == 'Menunggu Approval')
+                                                <span class="badge bg-warning">Menunggu Approval</span>
+                                            @elseif ($receipt->status == 'Disetujui')
+                                                <span class="badge bg-success">Disetujui</span>
+                                            @elseif ($receipt->status == 'Ditolak')
+                                                <span class="badge bg-danger">Ditolak</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-sm text-muted">
+                                            {{ $receipt->created_at->diffForHumans() }}
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('receipts.show', $receipt->id) }}"
+                                                class="btn btn-sm btn-outline-primary">
+                                                Lihat
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">Tidak ada aktivitas terbaru.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-        </div>
-        
-        {{-- <div class="row mt-4">
+
+
+
+            {{-- <div class="row mt-4">
             <div class="col-lg-7 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
                     <div class="card-header pb-0 pt-3 bg-transparent">
@@ -368,13 +498,13 @@
                 </div>
             </div>
         </div> --}}
-        @include('layouts.footers.auth.footer')
-    </div>
-@endsection
+            @include('layouts.footers.auth.footer')
+        </div>
+    @endsection
 
-@push('js')
-    <script src="./assets/js/plugins/chartjs.min.js"></script>
-    {{-- <script>
+    @push('js')
+        <script src="./assets/js/plugins/chartjs.min.js"></script>
+        {{-- <script>
         var ctx1 = document.getElementById("chart-line").getContext("2d");
 
         var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
@@ -457,4 +587,4 @@
             },
         });
     </script> --}}
-@endpush
+    @endpush

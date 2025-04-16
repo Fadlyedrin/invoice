@@ -49,7 +49,7 @@ Route::group(['middleware' => ['isAdmin']], function () {
 	Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
 	Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 	
-	Route::get('/invoice', [UserProfileController::class, 'index'])->name('invoice');
+
 	Route::resource('permissions', PermissionController::class);
 	Route::resource('roles', RoleController::class);
 	Route::get('roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionToRole']);
