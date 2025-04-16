@@ -8,7 +8,9 @@
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                         <h4 class="mb-0 mb-md-0">Receipts</h4>
-                        <a href="{{ route('receipts.create') }}" class="btn btn-primary mt-2 mt-md-0">Add Receipt</a>
+                        @can('create receipt')
+                            <a href="{{ route('receipts.create') }}" class="btn btn-primary mt-2 mt-md-0">Add Receipt</a>
+                        @endcan
                     </div>
                     <div id="alert">
                         @include('components.alert')
@@ -40,22 +42,28 @@
                                     </div>
                                     <div class="d-flex justify-content-end mt-2">
                                         <div class="action-buttons">
-                                            <a href="{{ route('receipts.show', $receipt->id) }}"
-                                                class="btn btn-info btn-md me-2" title="Lihat">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="{{ route('receipts.edit', $receipt->id) }}"
-                                                class="btn btn-warning btn-md me-2" title="Edit">
-                                                <i class="fas fa-pencil-square"></i>
-                                            </a>
-                                            <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST"
-                                                class="d-inline"
-                                                onsubmit="return confirm('Yakin ingin menghapus receipt ini?')">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-md" title="Hapus">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
+                                            @can('approve receipt')
+                                                <a href="{{ route('receipts.show', $receipt->id) }}"
+                                                    class="btn btn-info btn-md me-2" title="Lihat">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            @endcan
+                                            @can('update receipt')
+                                                <a href="{{ route('receipts.edit', $receipt->id) }}"
+                                                    class="btn btn-warning btn-md me-2" title="Edit">
+                                                    <i class="fas fa-pencil-square"></i>
+                                                </a>
+                                            @endcan
+                                            @can('delete receipt')
+                                                <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST"
+                                                    class="d-inline"
+                                                    onsubmit="return confirm('Yakin ingin menghapus receipt ini?')">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-md" title="Hapus">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </div>
                                     </div>
                                 </div>

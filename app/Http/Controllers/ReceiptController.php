@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Storage;
 
 class ReceiptController extends Controller
 {
+
+    public function __construct()
+{
+
+    $this->middleware('permission:receipt')->only(['index']);
+    $this->middleware('permission:create receipt')->only(['create', 'store']);
+    $this->middleware('permission:update receipt')->only(['edit', 'update']);
+    $this->middleware('permission:delete receipt')->only(['destroy']);
+    $this->middleware('permission:approve receipt')->only(['show']);
+}
 public function index()
 {
     $user = Auth::user();

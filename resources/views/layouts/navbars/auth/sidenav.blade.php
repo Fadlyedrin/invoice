@@ -68,7 +68,7 @@
                     <span class="nav-link-text ms-1">Receipt</span>
                 </a>
             </li>
-            @can('index users')
+            @can('users')
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Role</h6>
                 </li>
@@ -84,7 +84,7 @@
                     </a>
                 </li>
             @endcan
-            @can('index roles')
+            @can('roles')
                 <li class="nav-item">
                     <a class="nav-link {{ str_contains(request()->url(), 'roles') == true ? 'active' : '' }}"
                         href="{{ url('roles') }}">
@@ -96,7 +96,7 @@
                     </a>
                 </li>
             @endcan
-            @can('index permissions')
+            @can('permissions')
                 <li class="nav-item">
                     <a class="nav-link {{ str_contains(request()->url(), 'permissions') == true ? 'active' : '' }}"
                         href="{{ url('permissions') }}">
