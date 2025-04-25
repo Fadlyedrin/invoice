@@ -204,3 +204,4 @@ public function approve(Request $request, Receipt $receipt)
         return $pdf->download("receipt-{$receipt->id}.pdf");
     }
 }
+

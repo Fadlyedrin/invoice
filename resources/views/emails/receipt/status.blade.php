@@ -115,7 +115,7 @@
             </tr>
         </table>
         
-        @if($status == 'Disetujui')
+        @if($status == 'approve')
             <div class="reason">
                 <strong>Alasan Persetujuan:</strong>
                 <p>{{ $receipt->draft_data['approval_reason'] ?? 'Tidak ada alasan yang diberikan.' }}</p>
@@ -130,7 +130,7 @@
             @endif
         @endif
         
-        @if($status == 'Ditolak')
+        @if($status == 'rejected')
             <div class="reason">
                 <strong>Alasan Penolakan:</strong>
                 <p>{{ $receipt->draft_data['rejection_reason'] ?? 'Tidak ada alasan yang diberikan.' }}</p>

@@ -90,7 +90,7 @@
 
         <!-- resources/views/dashboard/index.blade.php -->
 <div class="row mt-4">
-            <div class="col-lg-6 mb-lg-0 mb-4" style="margin-top: 5%">
+            <div class="col-lg-6 mb-lg-0 mb-4" style="margin-top: 7%">
                 <div class="card ">
                     <div class="card-header pb-0 p-3">
                         <div class="d-flex justify-content-between">
@@ -149,7 +149,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-6 mb-lg-0 mb-4" style="margin-top: 5%">
+            <div class="col-lg-6 mb-lg-0 mb-4" style="margin-top: 7%">
                 <div class="card">
                     <div class="card-header pb-0 p-3">
                         <div class="d-flex justify-content-between">
