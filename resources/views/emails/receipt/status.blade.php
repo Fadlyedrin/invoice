@@ -115,7 +115,7 @@
             </tr>
         </table>
         
-        @if($status == 'approve')
+        @if($status == 'approved')
             <div class="reason">
                 <strong>Alasan Persetujuan:</strong>
                 <p>{{ $receipt->draft_data['approval_reason'] ?? 'Tidak ada alasan yang diberikan.' }}</p>
@@ -136,6 +136,10 @@
                 <p>{{ $receipt->draft_data['rejection_reason'] ?? 'Tidak ada alasan yang diberikan.' }}</p>
             </div>
             <p>Silakan login ke sistem untuk melakukan revisi dan mengajukan kembali.</p>
+
+                        <div style="text-align: center;">
+                <a href="{{ route('receipts.index') }}" class="button">Login ke Sistem</a>
+            </div>
         @endif
     </div>
     

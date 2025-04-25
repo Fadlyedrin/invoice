@@ -82,7 +82,6 @@ public function index()
 
     public function edit(Receipt $receipt)
 {
-    // Izinkan juga status 'Ditolak' untuk bisa diedit
     if (!in_array($receipt->status, ['Draft', 'Menunggu Approval', 'Ditolak'])) {
         return redirect()->back()->with('error', 'Receipt tidak dapat diubah karena status-nya sudah final.');
     }
@@ -98,7 +97,6 @@ public function index()
 
 public function update(Request $request, Receipt $receipt)
 {
-    // Izinkan juga status 'Ditolak' untuk bisa diupdate
     if (!in_array($receipt->status, ['Draft', 'Menunggu Approval', 'Ditolak'])) {
         return redirect()->back()->with('error', 'Receipt tidak dapat diubah karena status-nya sudah final.');
     }
