@@ -20,6 +20,42 @@
     <link id="pagestyle" href="{{ asset('assets/css/argon-dashboard.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+
+    <style>
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar-collapse {
+        padding-top: 1rem;
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+    }
+
+    .navbar-nav .dropdown-menu {
+        position: static !important;
+        float: none;
+        box-shadow: none;
+        width: 100%;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .navbar-nav .dropdown-menu .dropdown-item {
+        padding-left: 2rem;
+    }
+
+    .navbar-nav .dropdown-toggle::after {
+        float: right;
+        margin-top: 0.5rem;
+    }
+}
+
+        </style>
     @stack('css')
 </head>
 
@@ -32,8 +68,8 @@
         <div class="position-absolute w-100 min-height-300 top-0" style="background-position-y: 50%;">
             <span class="mask bg-gradient-dark opacity-6"></span>
         </div>
-
-        @include('layouts.navbars.auth.sidenav')
+        @include('layouts.navbars.auth.topnav')
+        {{-- @include('layouts.navbars.auth.sidenav') --}}
         <main class="main-content border-radius-lg">
             @yield('content')
         </main>

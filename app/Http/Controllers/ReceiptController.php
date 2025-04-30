@@ -48,37 +48,64 @@ public function index()
                     ->doesntHave('receipt') // agar hanya invoice yang belum punya receipt
                     ->get();
 
-        return view('receipts.create', compact('invoices'));
+        $invoicee = Invoice::get();
+
+        return view('receipts.create', compact('invoices', 'invoicee'));
     }
 
 
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'invoice_id' => 'required|exists:invoices,id|unique:receipts,invoice_id',
-            'amount_paid' => 'required|numeric|min:0',
-            'payment_method' => 'required|in:Cash,Credit Card,Bank Transfer',
-            'payment_date' => 'required|date',
-            'payment_status' => 'required|in:Pending,Partial,Complete',
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'invoice_id' => 'required|exists:invoices,id|unique:receipts,invoice_id',
+        'amount_paid' => 'required|numeric|min:0',
+        'payment_method' => 'required|in:Cash,Credit Card,Bank Transfer',
+        'payment_date' => 'required|date',
+        'payment_status' => 'required|in:Pending,Partial,Complete',
+    ]);
 
-        $receipt = Receipt::create([
-            'invoice_id' => $request->invoice_id,
-            'amount_paid' => $request->amount_paid,
-            'payment_method' => $request->payment_method,
-            'status' => 'Draft',
-            'payment_date' => $request->payment_date,
-            'draft_data' => null
-        ]);
+    // Generate Receipt Number
+    $prefix = 'RCP/BSM/' . date('Y') . '/' . $this->convertToRoman(date('m')) . '/' . date('d') . '/';
+    $lastReceipt = Receipt::withTrashed()
+        ->where('receipt_number', 'like', $prefix . '%')
+        ->orderBy('id', 'desc')
+        ->first();
+    $lastNumber = $lastReceipt ? intval(substr($lastReceipt->receipt_number, strrpos($lastReceipt->receipt_number, '/') + 1)) : 0;
+    $newNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
+    $receiptNumber = $prefix . $newNumber;
 
-        // update status invoice
-        $receipt->invoice->update([
-            'payment_status' => $request->payment_status
-        ]);
+    // Simpan Receipt baru
+    $receipt = Receipt::create([
+        'invoice_id' => $request->invoice_id,
+        'amount_paid' => $request->amount_paid,
+        'payment_method' => $request->payment_method,
+        'status' => 'Draft',
+        'payment_date' => $request->payment_date,
+        'draft_data' => null,
+        'receipt_number' => $receiptNumber, // <- Tambahkan di sini
+    ]);
 
-        return redirect()->route('receipts.index')->with('success', 'Receipt berhasil dibuat.');
-    }
+    // Update status Invoice
+    $receipt->invoice->update([
+        'payment_status' => $request->payment_status
+    ]);
+
+    return redirect()->route('receipts.index')->with('success', 'Receipt berhasil dibuat.');
+}
+
+// Helper function untuk bulan romawi
+private function convertToRoman($month)
+{
+    $romanMonths = [
+        1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV',
+        5 => 'V', 6 => 'VI', 7 => 'VII', 8 => 'VIII',
+        9 => 'IX', 10 => 'X', 11 => 'XI', 12 => 'XII'
+    ];
+    return $romanMonths[intval($month)];
+}
+
+
 
     public function edit(Receipt $receipt)
 {
@@ -106,28 +133,46 @@ public function update(Request $request, Receipt $receipt)
         'payment_method' => 'required|in:Cash,Credit Card,Bank Transfer',
         'payment_date' => 'required|date',
         'payment_status' => 'required|in:Pending,Partial,Complete',
-        'change_status' => 'sometimes|boolean', // Tambahkan validasi untuk checkbox perubahan status
+        'change_status' => 'sometimes|boolean', 
     ]);
+
+    // Jika receipt_number masih kosong, buat baru
+    if (empty($receipt->receipt_number)) {
+        $prefix = 'RCP/BSM/' . date('Y') . '/' . $this->convertToRoman(date('m')) . '/' . date('d') . '/';
+        $lastReceipt = Receipt::withTrashed()
+            ->where('receipt_number', 'like', $prefix . '%')
+            ->orderBy('id', 'desc')
+            ->first();
+        $lastNumber = $lastReceipt ? intval(substr($lastReceipt->receipt_number, strrpos($lastReceipt->receipt_number, '/') + 1)) : 0;
+        $newNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
+        $receiptNumber = $prefix . $newNumber;
+
+        $receipt->receipt_number = $receiptNumber;
+    }
 
     // Jika receipt berstatus Ditolak dan ada permintaan untuk mengubah statusnya
     if ($receipt->status === 'Ditolak' && $request->change_status) {
         $receipt->status = 'Menunggu Approval';
     }
 
+    // Update data receipt
     $receipt->update([
         'amount_paid' => $request->amount_paid,
         'payment_method' => $request->payment_method,
         'payment_date' => $request->payment_date,
-        'status' => $receipt->status, // Gunakan status yang mungkin sudah diupdate di atas
+        'status' => $receipt->status,
+        'receipt_number' => $receipt->receipt_number, // Pastikan receipt_number tetap ada
     ]);
 
-    // update juga status invoice
+    // Update juga status invoice
     $receipt->invoice->update([
         'payment_status' => $request->payment_status
     ]);
 
     return redirect()->route('receipts.index')->with('success', 'Receipt berhasil diperbarui.');
 }
+
+
 
     public function show(Receipt $receipt)
     {

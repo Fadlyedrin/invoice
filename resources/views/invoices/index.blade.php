@@ -1,7 +1,7 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav')
+
     <div class="container-fluid py-4">
         <div class="row mt-4 mx-1 mx-sm-4">
             <div class="col-12">
@@ -45,12 +45,12 @@
                                     </div>
                                     <div class="d-flex justify-content-end mt-2">
                                         <div class="action-buttons">
-                                            @can('approve invoices')
+
                                                 <a href="{{ route('invoices.show', $invoice->id) }}"
                                                     class="btn btn-info btn-md me-2">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                            @endcan
+
                                             @can('update invoices')
                                                 <a href="{{ route('invoices.edit', $invoice->id) }}"
                                                     class="btn btn-warning btn-md me-2">

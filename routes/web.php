@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\NikParserController;
 use App\Models\Receipt;
 
 /*
@@ -30,7 +31,8 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\ChangePassword;            
+use App\Http\Controllers\ChangePassword;
+use Illuminate\Support\Facades\DB;          
             
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
@@ -65,10 +67,52 @@ Route::group(['middleware' => ['isAdmin']], function () {
 	Route::post('/receipts/{receipt}/approve', [ReceiptController::class, 'approve'])->name('receipts.approve');
 	Route::post('/receipts/{receipt}/reject', [ReceiptController::class, 'reject'])->name('receipts.reject');
 
+		Route::get('/approvalPage', [HomeController::class, 'approvalPage'])->name('approvalPage');
 	});
 
 	
 	Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])->name('invoices.download');
 	Route::get('/receipts/{receipt}/download', [ReceiptController::class, 'download'])->name('receipts.download');
-	
-	
+Route::get('/parse-nik/{nik}', function($nik) {
+	if (!preg_match('/^\d{16}$/', $nik)) {
+		return response()->json(['success' => false, 'message' => 'Format NIK salah']);
+	}
+
+	$kodeProvinsi = substr($nik, 0, 2);
+	$kodeKota = substr($nik, 0, 4);
+	$kodeKecamatan = substr($nik, 0, 6);
+	$tanggalLahir = substr($nik, 6, 6);
+
+	// Ambil DDMMYY
+	$day = (int) substr($tanggalLahir, 0, 2);
+	$month = (int) substr($tanggalLahir, 2, 2);
+	$year = (int) substr($tanggalLahir, 4, 2);
+
+	// Tentukan jenis kelamin
+	$gender = 'Laki-laki';
+	if ($day > 40) {
+		$gender = 'Perempuan';
+		$day -= 40;
+	}
+
+	// Tentukan tahun lahir (asumsi 00-29 = 2000-an, lainnya 1900-an)
+	$currentYear = (int) date('Y');
+	$century = ($year <= ((int) date('y'))) ? 2000 : 1900;
+	$fullYear = $century + $year;
+
+	// Bentuk tanggal lahir
+	$birthDate = sprintf('%04d-%02d-%02d', $fullYear, $month, $day);
+
+	$provinsi = DB::table('provinces')->where('code', $kodeProvinsi)->first();
+	$kota = DB::table('cities')->where('code', $kodeKota)->first();
+	$kecamatan = DB::table('districts')->where('code', $kodeKecamatan)->first();
+
+	return response()->json([
+		'success' => true,
+		'provinsi' => $provinsi ? $provinsi->name : '-',
+		'kota' => $kota ? $kota->name : '-',
+		'kecamatan' => $kecamatan ? $kecamatan->name : '-',
+		'tanggal_lahir' => $birthDate,
+		'jenis_kelamin' => $gender,
+	]);
+});

@@ -1,42 +1,81 @@
-<!-- Navbar -->
-<!-- Navbar -->
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl
-    {{ str_contains(Request::url(), 'virtual-reality') == true ? ' mt-3 mx-3 bg-primary' : '' }}"
-    id="navbarBlur" data-scroll="false">
-    
-    <div class="container-fluid py-1 px-3 d-flex justify-content-between align-items-center">
+<div class="container-fluid position-sticky z-index-sticky top-0 mb-5">
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
+                <div class="container-fluid d-flex justify-content-between align-items-center">
 
-        <!-- Left: Breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0">
-                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            </ol>
-        </nav>
-
-        <!-- Right: Logout -->
-        <ul class="navbar-nav d-flex align-items-center mb-0">
-            <li class="nav-item d-flex align-items-center">
-                <form role="form" method="post" action="{{ route('logout') }}" id="logout-form" class="mb-0">
-                    @csrf
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                        class="nav-link text-white font-weight-bold px-2">
-                        <i class="fa fa-user me-1"></i>
-                        <span class="d-inline">Log out</span>
+                    <!-- Logo -->
+                    <a class="navbar-brand font-weight-bolder ms-2" href="{{ route('home') }}">
+                        Invoice System
                     </a>
-                </form>
-            </li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                    <div class="sidenav-toggler-inner" style="transform: scale(1.2);">
-                        <i class="sidenav-toggler-line bg-white"></i>
-                        <i class="sidenav-toggler-line bg-white"></i>
-                        <i class="sidenav-toggler-line bg-white"></i>
+
+                    <!-- Hamburger / Toggler Button -->
+                    <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon mt-2">
+                            <span class="navbar-toggler-bar bar1"></span>
+                            <span class="navbar-toggler-bar bar2"></span>
+                            <span class="navbar-toggler-bar bar3"></span>
+                        </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                        <!-- Tengah: Menu -->
+                        <div class="d-flex justify-content-center flex-grow-1">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ route('home') }}">
+                                        <i class="fa fa-chart-pie text-dark me-1"></i> Dashboard
+                                    </a>
+                                </li>
+
+                                <!-- Transaksi Dropdown -->
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                        <i class="fa fa-folder-open text-dark me-1"></i> Transaksi
+                                    </a>
+                                    <ul class="dropdown-menu" style="margin-top: 0.3rem !important; top: 100% !important;">
+                                        <li><a class="dropdown-item" href="{{ url('invoices') }}">Invoice</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('receipts') }}">Receipt</a></li>
+                                        @can('approval invoices')
+                                            <li><a class="dropdown-item" href="{{ route('approvalPage') }}">Approval</a></li>
+                                        @endcan
+                                    </ul>
+                                </li>
+
+                                <!-- User Management Dropdown -->
+                                @can('roles')
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                        <i class="fa fa-user-shield text-dark me-1"></i> User Management
+                                    </a>
+                                    <ul class="dropdown-menu" style="margin-top: 0.3rem !important; top: 100% !important;">
+                                        @can('users')
+                                            <li><a class="dropdown-item" href="{{ url('users') }}">User</a></li>
+                                        @endcan
+                                        <li><a class="dropdown-item" href="{{ url('roles') }}">Role</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('permissions') }}">Permissions</a></li>
+                                    </ul>
+                                </li>
+                                @endcan
+                            </ul>
+                        </div>
+
+                        <!-- Kanan: Profile -->
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                    <i class="fa fa-user-circle text-dark me-1"></i> {{ auth()->user()->username ?? 'User' }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" style="margin-top: 0.3rem !important; top: 100% !important;">
+                                    <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
-                </a>
-            </li>
-        </ul>
+
+                </div>
+            </nav>
+        </div>
     </div>
-</nav>
-<!-- End Navbar -->
-<!-- End Navbar -->
+</div>

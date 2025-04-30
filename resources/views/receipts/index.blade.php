@@ -1,7 +1,6 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav')
     <div class="container-fluid py-4">
         <div class="row mt-4 mx-1 mx-sm-4">
             <div class="col-12">
@@ -78,7 +77,8 @@
                                         <th>No.</th>
                                         <th>Nama</th>
                                         <th>Invoice</th>
-                                        <th>Jumlah Dibayar</th>
+                                        <th>Jumlah Dibayar</th> 
+                                        <th>Sisa Bayaran</th> 
                                         <th>Metode</th>
                                         <th>Status</th>
                                         <th class="text-center">Aksi</th>
@@ -95,8 +95,9 @@
                                                     Unknown User
                                                 @endif
                                             </td>
-                                            <td>{{ $receipt->invoice->invoice_number }}</td>
+                                             <td>{{ $receipt->receipt_number }}</td>
                                             <td>Rp{{ number_format($receipt->amount_paid, 2, ',', '.') }}</td>
+                                            <td>Rp{{ number_format($receipt->invoice->amount - $receipt->amount_paid, 2, ',', '.') }}</td>
                                             <td>{{ $receipt->payment_method }}</td>
                                             <td>
                                                 <span

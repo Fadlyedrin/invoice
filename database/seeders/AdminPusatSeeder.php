@@ -41,7 +41,8 @@ class AdminPusatSeeder extends Seeder
             'create receipt', 
             'update receipt', 
             'delete receipt',
-            'approve receipt'
+            'approve receipt',
+            'approval invoices'
         ];
         
         // 3. Buat permission jika belum ada

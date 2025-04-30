@@ -12,16 +12,19 @@ class InvoiceItem extends Model
         'item_name',
         'quantity',
         'price_per_item',
-        'total_price'
+        'total_price',
+        'item_details'
     ];
 
     protected $casts = [
-        'total_price' => 'decimal:2'
+        'total_price' => 'decimal:2',
+        'item_details' => 'array'
     ];
 
 public function invoice()
 {
     return $this->belongsTo(Invoice::class);
 }
+
 
 }

@@ -1,7 +1,6 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav')
     <div class="container-fluid py-4">
         <div class="row mt-4 mx-1 mx-sm-4">
             <div class="col-12">
@@ -84,6 +83,28 @@
         </div>
     </div>
 @endsection
+@push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const invoiceSelect = document.getElementById('invoice_id');
+        const amountInput = document.getElementById('amount_paid');
+
+        // Data invoice amount (ambil dari Blade, dikasih attribute tambahan)
+        const invoices = @json($invoices->pluck('amount', 'id'));
+
+        invoiceSelect.addEventListener('change', function () {
+            const selectedInvoiceId = this.value;
+            const maxAmount = invoices[selectedInvoiceId] || 0;
+
+            if (maxAmount > 0) {
+                amountInput.max = maxAmount;
+            } else {
+                amountInput.removeAttribute('max');
+            }
+        });
+    });
+</script>
+@endpush
 @push('css')
     <style>
 

@@ -1,10 +1,10 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Dashboard'])
+
     <div class="container-fluid py-4">
 @role('admin pusat')
-    <div class="row">
+    <div class="row mt-4 mx-1 mx-sm-4">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-body p-3">

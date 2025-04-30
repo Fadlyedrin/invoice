@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
+            $table->string('receipt_number')->nullable()->unique();
             $table->foreignId('invoice_id')->unique()->constrained();
             $table->decimal('amount_paid', 30, 2);
             $table->enum('payment_method', ['Cash', 'Credit Card', 'Bank Transfer']);

@@ -1,8 +1,6 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav')
-
     <div class="container-fluid py-4">
         <div class="row mt-4 mx-1 mx-sm-4">
             <div class="col-12">

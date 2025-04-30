@@ -1,0 +1,764 @@
+[
+    {
+        "id": "3171",
+        "province_code": "31",
+        "name": "KOTA JAKARTA PUSAT",
+        "meta": {
+            "lat": -6.1823968,
+            "long": 106.8295585
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3172",
+        "province_code": "31",
+        "name": "KOTA JAKARTA UTARA",
+        "meta": {
+            "lat": -6.1212892,
+            "long": 106.7774461
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3173",
+        "province_code": "31",
+        "name": "KOTA JAKARTA BARAT",
+        "meta": {
+            "lat": -6.1683295,
+            "long": 106.7588465
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3174",
+        "province_code": "31",
+        "name": "KOTA JAKARTA SELATAN",
+        "meta": {
+            "lat": -6.2614927,
+            "long": 106.8105998
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3175",
+        "province_code": "31",
+        "name": "KOTA JAKARTA TIMUR",
+        "meta": {
+            "lat": -6.2250138,
+            "long": 106.9004472
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3101",
+        "province_code": "31",
+        "name": "KABUPATEN KEPULAUAN SERIBU",
+        "meta": {
+            "lat": -5.612901,
+            "long": 106.5452992
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    
+    {
+        "id": "3201",
+        "province_code": "32",
+        "name": "KABUPATEN BOGOR",
+        "meta": {
+            "lat": -6.5517758,
+            "long": 106.6291304
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3202",
+        "province_code": "32",
+        "name": "KABUPATEN SUKABUMI",
+        "meta": {
+            "lat": -6.9277565,
+            "long": 106.9221973
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3203",
+        "province_code": "32",
+        "name": "KABUPATEN CIANJUR",
+        "meta": {
+            "lat": -7.3579773,
+            "long": 107.1957302
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3204",
+        "province_code": "32",
+        "name": "KABUPATEN BANDUNG",
+        "meta": {
+            "lat": -7.1340702,
+            "long": 107.6215321
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3205",
+        "province_code": "32",
+        "name": "KABUPATEN GARUT",
+        "meta": {
+            "lat": -7.5012872,
+            "long": 107.7636335
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3206",
+        "province_code": "32",
+        "name": "KABUPATEN TASIKMALAYA",
+        "meta": {
+            "lat": -7.6513873,
+            "long": 108.1388979
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3207",
+        "province_code": "32",
+        "name": "KABUPATEN CIAMIS",
+        "meta": {
+            "lat": -7.3336311,
+            "long": 108.3513658
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3208",
+        "province_code": "32",
+        "name": "KABUPATEN KUNINGAN",
+        "meta": {
+            "lat": -6.9856677,
+            "long": 108.4838591
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3209",
+        "province_code": "32",
+        "name": "KABUPATEN CIREBON",
+        "meta": {
+            "lat": -6.6897323,
+            "long": 108.4742567
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3210",
+        "province_code": "32",
+        "name": "KABUPATEN MAJALENGKA",
+        "meta": {
+            "lat": -6.7790948,
+            "long": 108.2888592
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3211",
+        "province_code": "32",
+        "name": "KABUPATEN SUMEDANG",
+        "meta": {
+            "lat": -6.8327422,
+            "long": 107.9531402
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3212",
+        "province_code": "32",
+        "name": "KABUPATEN INDRAMAYU",
+        "meta": {
+            "lat": -6.3368605,
+            "long": 108.3249624
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3213",
+        "province_code": "32",
+        "name": "KABUPATEN SUBANG",
+        "meta": {
+            "lat": -6.5576505,
+            "long": 107.7583103
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3214",
+        "province_code": "32",
+        "name": "KABUPATEN PURWAKARTA",
+        "meta": {
+            "lat": -6.5603886,
+            "long": 107.4402136
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3215",
+        "province_code": "32",
+        "name": "KABUPATEN KARAWANG",
+        "meta": {
+            "lat": -6.265221,
+            "long": 107.3000931
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3216",
+        "province_code": "32",
+        "name": "KABUPATEN BEKASI",
+        "meta": {
+            "lat": -6.2469388,
+            "long": 107.1485204
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3217",
+        "province_code": "32",
+        "name": "KABUPATEN BANDUNG BARAT",
+        "meta": {
+            "lat": -6.8652214,
+            "long": 107.4919216
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3218",
+        "province_code": "32",
+        "name": "KABUPATEN PANGANDARAN",
+        "meta": {
+            "lat": -7.6150829,
+            "long": 108.493773
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3271",
+        "province_code": "32",
+        "name": "KOTA BOGOR",
+        "meta": {
+            "lat": -6.5971469,
+            "long": 106.8060388
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3272",
+        "province_code": "32",
+        "name": "KOTA SUKABUMI",
+        "meta": {
+            "lat": -6.9277565,
+            "long": 106.9221973
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3273",
+        "province_code": "32",
+        "name": "KOTA BANDUNG",
+        "meta": {
+            "lat": -6.9174639,
+            "long": 107.6191228
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3274",
+        "province_code": "32",
+        "name": "KOTA CIREBON",
+        "meta": {
+            "lat": -6.7320229,
+            "long": 108.5523164
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3275",
+        "province_code": "32",
+        "name": "KOTA BEKASI",
+        "meta": {
+            "lat": -6.2349858,
+            "long": 106.9945121
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3276",
+        "province_code": "32",
+        "name": "KOTA DEPOK",
+        "meta": {
+            "lat": -6.4024844,
+            "long": 106.7942405
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3277",
+        "province_code": "32",
+        "name": "KOTA CIMAHI",
+        "meta": {
+            "lat": -6.8840816,
+            "long": 107.5413039
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3278",
+        "province_code": "32",
+        "name": "KOTA TASIKMALAYA",
+        "meta": {
+            "lat": -7.3505808,
+            "long": 108.2201672
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3279",
+        "province_code": "32",
+        "name": "KOTA BANJAR",
+        "meta": {
+            "lat": -7.3707205,
+            "long": 108.5345373
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    
+    {
+        "id": "3301",
+        "province_code": "33",
+        "name": "KABUPATEN CILACAP",
+        "meta": {
+            "lat": -7.7267252,
+            "long": 109.0112418
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3302",
+        "province_code": "33",
+        "name": "KABUPATEN BANYUMAS",
+        "meta": {
+            "lat": -7.4832133,
+            "long": 109.140438
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3303",
+        "province_code": "33",
+        "name": "KABUPATEN PURBALINGGA",
+        "meta": {
+            "lat": -7.3059373,
+            "long": 109.4259169
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3304",
+        "province_code": "33",
+        "name": "KABUPATEN BANJARNEGARA",
+        "meta": {
+            "lat": -7.3794694,
+            "long": 109.6213269
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3305",
+        "province_code": "33",
+        "name": "KABUPATEN KEBUMEN",
+        "meta": {
+            "lat": -7.6680559,
+            "long": 109.6522364
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3306",
+        "province_code": "33",
+        "name": "KABUPATEN PURWOREJO",
+        "meta": {
+            "lat": -7.6964509,
+            "long": 109.9989302
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3307",
+        "province_code": "33",
+        "name": "KABUPATEN WONOSOBO",
+        "meta": {
+            "lat": -7.3632919,
+            "long": 109.9004164
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3308",
+        "province_code": "33",
+        "name": "KABUPATEN MAGELANG",
+        "meta": {
+            "lat": -7.4777327,
+            "long": 110.2222865
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3309",
+        "province_code": "33",
+        "name": "KABUPATEN BOYOLALI",
+        "meta": {
+            "lat": -7.4316642,
+            "long": 110.6883304
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3310",
+        "province_code": "33",
+        "name": "KABUPATEN KLATEN",
+        "meta": {
+            "lat": -7.7216694,
+            "long": 110.5960283
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3311",
+        "province_code": "33",
+        "name": "KABUPATEN SUKOHARJO",
+        "meta": {
+            "lat": -7.6483769,
+            "long": 110.8555936
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3312",
+        "province_code": "33",
+        "name": "KABUPATEN WONOGIRI",
+        "meta": {
+            "lat": -7.8138726,
+            "long": 110.9231438
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3313",
+        "province_code": "33",
+        "name": "KABUPATEN KARANGANYAR",
+        "meta": {
+            "lat": -7.5961513,
+            "long": 110.9401684
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3314",
+        "province_code": "33",
+        "name": "KABUPATEN SRAGEN",
+        "meta": {
+            "lat": -7.4286111,
+            "long": 111.0188927
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3315",
+        "province_code": "33",
+        "name": "KABUPATEN GROBOGAN",
+        "meta": {
+            "lat": -7.0166394,
+            "long": 110.9184301
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3316",
+        "province_code": "33",
+        "name": "KABUPATEN BLORA",
+        "meta": {
+            "lat": -7.0122054,
+            "long": 111.3798675
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3317",
+        "province_code": "33",
+        "name": "KABUPATEN REMBANG",
+        "meta": {
+            "lat": -6.8082804,
+            "long": 111.4226685
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3318",
+        "province_code": "33",
+        "name": "KABUPATEN PATI",
+        "meta": {
+            "lat": -6.7449635,
+            "long": 111.0388708
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3319",
+        "province_code": "33",
+        "name": "KABUPATEN KUDUS",
+        "meta": {
+            "lat": -6.8026351,
+            "long": 110.8418616
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3320",
+        "province_code": "33",
+        "name": "KABUPATEN JEPARA",
+        "meta": {
+            "lat": -6.5827961,
+            "long": 110.6680812
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3321",
+        "province_code": "33",
+        "name": "KABUPATEN DEMAK",
+        "meta": {
+            "lat": -6.8942919,
+            "long": 110.6381438
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3322",
+        "province_code": "33",
+        "name": "KABUPATEN SEMARANG",
+        "meta": {
+            "lat": -7.1364598,
+            "long": 110.4025805
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3323",
+        "province_code": "33",
+        "name": "KABUPATEN TEMANGGUNG",
+        "meta": {
+            "lat": -7.2748548,
+            "long": 110.0894623
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3324",
+        "province_code": "33",
+        "name": "KABUPATEN KENDAL",
+        "meta": {
+            "lat": -7.0265562,
+            "long": 110.1879277
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3325",
+        "province_code": "33",
+        "name": "KABUPATEN BATANG",
+        "meta": {
+            "lat": -7.0392035,
+            "long": 109.9024631
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3326",
+        "province_code": "33",
+        "name": "KABUPATEN PEKALONGAN",
+        "meta": {
+            "lat": -7.0317851,
+            "long": 109.624626
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3327",
+        "province_code": "33",
+        "name": "KABUPATEN PEMALANG",
+        "meta": {
+            "lat": -7.0599293,
+            "long": 109.424278
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3328",
+        "province_code": "33",
+        "name": "KABUPATEN TEGAL",
+        "meta": {
+            "lat": -6.8588485,
+            "long": 109.1047302
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3329",
+        "province_code": "33",
+        "name": "KABUPATEN BREBES",
+        "meta": {
+            "lat": -6.9550147,
+            "long": 108.902487
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3371",
+        "province_code": "33",
+        "name": "KOTA MAGELANG",
+        "meta": {
+            "lat": -7.4797342,
+            "long": 110.2176941
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3372",
+        "province_code": "33",
+        "name": "KOTA SURAKARTA",
+        "meta": {
+            "lat": -7.5592953,
+            "long": 110.8292582
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3373",
+        "province_code": "33",
+        "name": "KOTA SALATIGA",
+        "meta": {
+            "lat": -7.3300767,
+            "long": 110.5035253
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3374",
+        "province_code": "33",
+        "name": "KOTA SEMARANG",
+        "meta": {
+            "lat": -7.0051453,
+            "long": 110.4381254
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3375",
+        "province_code": "33",
+        "name": "KOTA PEKALONGAN",
+        "meta": {
+            "lat": -6.8898362,
+            "long": 109.6745916
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    {
+        "id": "3376",
+        "province_code": "33",
+        "name": "KOTA TEGAL",
+        "meta": {
+            "lat": -6.8694502,
+            "long": 109.1357762
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    },
+    
+    {
+        "id": "3401",
+        "province_code": "34",
+        "name": "KABUPATEN KULON PROGO",
+        "meta": {
+            "lat": -7.8266798,
+            "long": 110.1640846
+        },
+        "created_at": "2022-06-11 17:48:14",
+        "updated_at": "2022-06-11 17:48:14"
+    }
+]

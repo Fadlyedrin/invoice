@@ -1,7 +1,7 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav')
+
     <div class="container-fluid py-4">
         <div class="row mt-4 mx-1 mx-sm-4">
             <div class="col-12">
@@ -45,30 +45,32 @@
                             </div>
                         </div>
 
-                        @if (in_array($invoice->status, ['Draft', 'Menunggu Approval']))
-                            <div class="row">
-                                <div class="col-12 col-md-6 mb-4">
-                                    <form action="{{ route('invoices.approve', $invoice->id) }}" method="POST">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="reason" class="form-label">Approval Reason</label>
-                                            <textarea name="reason" class="form-control" rows="3" required minlength="10"></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-success w-100">Approve</button>
-                                    </form>
+                            @if (in_array($invoice->status, ['Draft', 'Menunggu Approval']) && auth()->user()->hasRole('admin pusat'))
+                                <div class="row">
+
+                                    <div class="col-12 col-md-6 mb-4">
+                                        <form action="{{ route('invoices.approve', $invoice->id) }}" method="POST">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="reason" class="form-label">Approval Reason</label>
+                                                <textarea name="reason" class="form-control" rows="3" required minlength="10"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-success w-100">Approve</button>
+                                        </form>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 mb-4">
+                                        <form action="{{ route('invoices.reject', $invoice->id) }}" method="POST">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="reason" class="form-label">Rejection Reason</label>
+                                                <textarea name="reason" class="form-control" rows="3" required minlength="10"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-danger w-100">Reject</button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="col-12 col-md-6 mb-4">
-                                    <form action="{{ route('invoices.reject', $invoice->id) }}" method="POST">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="reason" class="form-label">Rejection Reason</label>
-                                            <textarea name="reason" class="form-control" rows="3" required minlength="10"></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-danger w-100">Reject</button>
-                                    </form>
-                                </div>
-                            </div>
-                        @endif
+                            @endif
 
                     </div>
                 </div>

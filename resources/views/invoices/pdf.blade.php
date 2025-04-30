@@ -79,6 +79,52 @@
 
     <p class="total">Total: Rp {{ number_format($invoice->amount, 0, ',', '.') }}</p>
 
+    <!-- Memaksa pemisahan halaman untuk halaman kedua -->
+    <div style="page-break-before: always;"></div>
+
+    <!-- Halaman Kedua: Tabel Detail Item dan Informasi Pengguna -->
+    @foreach($invoice->items as $item)
+        @php
+            $details = json_decode($item->item_details, true);
+        @endphp
+
+        <h3>{{ $item->item_name }}</h3>
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th style="text-align: left;">#</th>
+                    <th style="text-align: left;">NIK</th>
+                    <th style="text-align: left;">Nama</th>
+                    <th style="text-align: left;">Provinsi</th>
+                    <th style="text-align: left;">Kota</th>
+                    <th style="text-align: left;">Kecamatan</th>
+                    <th style="text-align: left;">Jenis Kelamin</th>
+                    <th style="text-align: left;">Tanggal Lahir</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(is_array($details) && count($details) > 0)
+                    @foreach($details as $i => $detail)
+                        <tr>
+                            <td>{{ $i + 1 }}</td>
+                            <td>{{ $detail['nik'] ?? '-' }}</td>
+                            <td>{{ $detail['nama'] ?? '-' }}</td>
+                            <td>{{ $detail['provinsi'] ?? '-' }}</td>
+                            <td>{{ $detail['kota'] ?? '-' }}</td>
+                            <td>{{ $detail['kecamatan'] ?? '-' }}</td>
+                            <td>{{ $detail['jenis_kelamin'] ?? '-' }}</td>
+                            <td>{{ $detail['tanggal_lahir'] ?? '-' }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="8">Tidak ada data detail</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    @endforeach
+
     <div class="footer">
         <p>Terima kasih telah menggunakan layanan kami</p>
     </div>
