@@ -37,6 +37,14 @@
                                 <label for="amount_paid" class="form-label">Jumlah Dibayar</label>
                                 <input type="number" step="0.01" name="amount_paid" id="amount_paid"
                                     class="form-control" required>
+                                <small class="form-text text-muted">
+                                    Status pembayaran akan otomatis ditentukan berdasarkan jumlah dibayar:
+                                    <ul>
+                                        <li>0: Pending</li>
+                                        <li>Sebagian dari total: Partial</li>
+                                        <li>Sama dengan total: Complete</li>
+                                    </ul>
+                                </small>
                             </div>
 
                             <div class="mb-3">
@@ -46,18 +54,6 @@
                                     <option value="Credit Card">Credit Card</option>
                                     <option value="Bank Transfer">Bank Transfer</option>
                                 </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="payment_status" class="form-label">Status Pembayaran Invoice</label>
-                                <select name="payment_status" id="payment_status" class="form-select" required>
-                                    <option value="Pending" {{ old('payment_status') == 'Pending' ? 'selected' : '' }}>Pending</option>
-                                    <option value="Partial" {{ old('payment_status') == 'Partial' ? 'selected' : '' }}>Partial</option>
-                                    <option value="Complete" {{ old('payment_status') == 'Complete' ? 'selected' : '' }}>Complete</option>
-                                </select>
-                                @error('payment_status')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -107,8 +103,6 @@
 @endpush
 @push('css')
     <style>
-
-
         @media (max-width: 767px) {
             .container-fluid {
                 padding-left: 0.1rem;

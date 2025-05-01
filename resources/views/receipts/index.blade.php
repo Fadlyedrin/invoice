@@ -39,6 +39,13 @@
                                             {{ $receipt->status }}
                                         </span>
                                     </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Payment Status:</span>
+                                        <span
+                                            class="badge bg-{{ $receipt->invoice->payment_status == 'Complete' ? 'success' : ($receipt->invoice->payment_status == 'Pending' ? 'danger' : 'warning') }}">
+                                            {{ $receipt->invoice->payment_status }}
+                                        </span>
+                                    </div>
                                     <div class="d-flex justify-content-end mt-2">
                                         <div class="action-buttons">
                                             @can('approve receipt')
@@ -76,11 +83,13 @@
                                     <tr class="text-center">
                                         <th>No.</th>
                                         <th>Nama</th>
+                                        <th>Receipt Number</th>
                                         <th>Invoice</th>
-                                        <th>Jumlah Dibayar</th> 
-                                        <th>Sisa Bayaran</th> 
+                                        <th>Jumlah Dibayar</th>
+                                        <th>Sisa Bayaran</th>
                                         <th>Metode</th>
-                                        <th>Status</th>
+                                        <th>Status Receipt</th>
+                                        <th>Status Pembayaran</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -95,7 +104,8 @@
                                                     Unknown User
                                                 @endif
                                             </td>
-                                             <td>{{ $receipt->receipt_number }}</td>
+                                            <td>{{ $receipt->receipt_number }}</td>
+                                            <td>{{ $receipt->invoice->invoice_number }}</td>
                                             <td>Rp{{ number_format($receipt->amount_paid, 2, ',', '.') }}</td>
                                             <td>Rp{{ number_format($receipt->invoice->amount - $receipt->amount_paid, 2, ',', '.') }}</td>
                                             <td>{{ $receipt->payment_method }}</td>
@@ -103,6 +113,12 @@
                                                 <span
                                                     class="badge bg-{{ $receipt->status == 'Disetujui' ? 'success' : ($receipt->status == 'Ditolak' ? 'danger' : 'warning') }}">
                                                     {{ $receipt->status }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge bg-{{ $receipt->invoice->payment_status == 'Complete' ? 'success' : ($receipt->invoice->payment_status == 'Pending' ? 'danger' : 'warning') }}">
+                                                    {{ $receipt->invoice->payment_status }}
                                                 </span>
                                             </td>
                                             <td class="text-center ">

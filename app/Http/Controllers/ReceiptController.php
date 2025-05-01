@@ -27,7 +27,7 @@ class ReceiptController extends Controller
 public function index()
 {
     $user = Auth::user();
-    
+
     // Check if user has admin_pusat role
     if ($user->hasRole('admin pusat')) {
         // Admin pusat can see all receipts
@@ -36,7 +36,7 @@ public function index()
         // Regular admins can only see receipts from their invoices
         $receipts = Receipt::with('invoice')->whereRelation('invoice', 'created_by', $user->id)->latest()->get();
     }
-    
+
     return view('receipts.index', compact('receipts'));
 }
 
@@ -52,47 +52,6 @@ public function index()
 
         return view('receipts.create', compact('invoices', 'invoicee'));
     }
-
-
-
-public function store(Request $request)
-{
-    $request->validate([
-        'invoice_id' => 'required|exists:invoices,id|unique:receipts,invoice_id',
-        'amount_paid' => 'required|numeric|min:0',
-        'payment_method' => 'required|in:Cash,Credit Card,Bank Transfer',
-        'payment_date' => 'required|date',
-        'payment_status' => 'required|in:Pending,Partial,Complete',
-    ]);
-
-    // Generate Receipt Number
-    $prefix = 'RCP/BSM/' . date('Y') . '/' . $this->convertToRoman(date('m')) . '/' . date('d') . '/';
-    $lastReceipt = Receipt::withTrashed()
-        ->where('receipt_number', 'like', $prefix . '%')
-        ->orderBy('id', 'desc')
-        ->first();
-    $lastNumber = $lastReceipt ? intval(substr($lastReceipt->receipt_number, strrpos($lastReceipt->receipt_number, '/') + 1)) : 0;
-    $newNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
-    $receiptNumber = $prefix . $newNumber;
-
-    // Simpan Receipt baru
-    $receipt = Receipt::create([
-        'invoice_id' => $request->invoice_id,
-        'amount_paid' => $request->amount_paid,
-        'payment_method' => $request->payment_method,
-        'status' => 'Draft',
-        'payment_date' => $request->payment_date,
-        'draft_data' => null,
-        'receipt_number' => $receiptNumber, // <- Tambahkan di sini
-    ]);
-
-    // Update status Invoice
-    $receipt->invoice->update([
-        'payment_status' => $request->payment_status
-    ]);
-
-    return redirect()->route('receipts.index')->with('success', 'Receipt berhasil dibuat.');
-}
 
 // Helper function untuk bulan romawi
 private function convertToRoman($month)
@@ -122,6 +81,51 @@ private function convertToRoman($month)
     return view('receipts.edit', compact('receipt', 'invoices'));
 }
 
+
+public function store(Request $request)
+{
+    $request->validate([
+        'invoice_id' => 'required|exists:invoices,id|unique:receipts,invoice_id',
+        'amount_paid' => 'required|numeric|min:0',
+        'payment_method' => 'required|in:Cash,Credit Card,Bank Transfer',
+        'payment_date' => 'required|date',
+    ]);
+
+    // Get the invoice to compare amounts
+    $invoice = \App\Models\Invoice::findOrFail($request->invoice_id);
+
+    // Automatically determine payment status based on amount paid
+    $paymentStatus = $this->determinePaymentStatus($request->amount_paid, $invoice->amount);
+
+    // Generate Receipt Number
+    $prefix = 'RCP/BSM/' . date('Y') . '/' . $this->convertToRoman(date('m')) . '/' . date('d') . '/';
+    $lastReceipt = Receipt::withTrashed()
+        ->where('receipt_number', 'like', $prefix . '%')
+        ->orderBy('id', 'desc')
+        ->first();
+    $lastNumber = $lastReceipt ? intval(substr($lastReceipt->receipt_number, strrpos($lastReceipt->receipt_number, '/') + 1)) : 0;
+    $newNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
+    $receiptNumber = $prefix . $newNumber;
+
+    // Simpan Receipt baru
+    $receipt = Receipt::create([
+        'invoice_id' => $request->invoice_id,
+        'amount_paid' => $request->amount_paid,
+        'payment_method' => $request->payment_method,
+        'status' => $request->status ?? 'Draft',
+        'payment_date' => $request->payment_date,
+        'draft_data' => null,
+        'receipt_number' => $receiptNumber,
+    ]);
+
+    // Update status Invoice
+    $invoice->update([
+        'payment_status' => $paymentStatus
+    ]);
+
+    return redirect()->route('receipts.index')->with('success', 'Receipt berhasil dibuat.');
+}
+
 public function update(Request $request, Receipt $receipt)
 {
     if (!in_array($receipt->status, ['Draft', 'Menunggu Approval', 'Ditolak'])) {
@@ -132,9 +136,14 @@ public function update(Request $request, Receipt $receipt)
         'amount_paid' => 'required|numeric|min:0',
         'payment_method' => 'required|in:Cash,Credit Card,Bank Transfer',
         'payment_date' => 'required|date',
-        'payment_status' => 'required|in:Pending,Partial,Complete',
-        'change_status' => 'sometimes|boolean', 
+        'change_status' => 'sometimes|boolean',
     ]);
+
+    // Get the invoice to compare amounts
+    $invoice = $receipt->invoice;
+
+    // Automatically determine payment status based on amount paid
+    $paymentStatus = $this->determinePaymentStatus($request->amount_paid, $invoice->amount);
 
     // Jika receipt_number masih kosong, buat baru
     if (empty($receipt->receipt_number)) {
@@ -165,11 +174,29 @@ public function update(Request $request, Receipt $receipt)
     ]);
 
     // Update juga status invoice
-    $receipt->invoice->update([
-        'payment_status' => $request->payment_status
+    $invoice->update([
+        'payment_status' => $paymentStatus
     ]);
 
     return redirect()->route('receipts.index')->with('success', 'Receipt berhasil diperbarui.');
+}
+
+/**
+ * Determine payment status based on amount paid vs total invoice amount
+ *
+ * @param float $amountPaid
+ * @param float $invoiceTotal
+ * @return string
+ */
+private function determinePaymentStatus($amountPaid, $invoiceTotal)
+{
+    if ($amountPaid <= 0) {
+        return 'Pending';
+    } elseif ($amountPaid < $invoiceTotal) {
+        return 'Partial';
+    } else {
+        return 'Complete';
+    }
 }
 
 
@@ -244,7 +271,10 @@ public function approve(Request $request, Receipt $receipt)
     public function download(Receipt $receipt)
     {
         $pdf = Pdf::loadView('receipts.pdf', compact('receipt'));
-        return $pdf->download("receipt-{$receipt->id}.pdf");
+
+        $sanitizedreceiptNumber = str_replace(['/', '\\'], '-', $receipt->receipt_number);
+
+        return $pdf->download("receipt-{$sanitizedreceiptNumber}.pdf");
     }
 }
 

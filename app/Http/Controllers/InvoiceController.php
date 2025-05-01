@@ -24,7 +24,7 @@ class InvoiceController extends Controller
 
 /**
  * Validasi apakah tanggal yang dihasilkan valid
- * 
+ *
  * @param string $date Format Y-m-d
  * @return bool
  */
@@ -36,7 +36,7 @@ private function isValidDate($date)
     public function index()
     {
         $user = Auth::user();
-        
+
         // Check if user has admin_pusat role
         if ($user->hasRole('admin pusat')) {
             // Admin pusat can see all invoices
@@ -45,7 +45,7 @@ private function isValidDate($date)
             // Regular admins can only see their own invoices
             $invoices = Invoice::with(['items', 'creator'])->where('created_by', $user->id)->latest()->get();
         }
-        
+
         return view('invoices.index', compact('invoices'));
     }
 
@@ -184,7 +184,7 @@ public function update(Request $request, Invoice $invoice)
                 if (!is_array($obj) || !isset($obj['nik']) || !is_string($obj['nik'])) {
                     return back()->withErrors(['Item details harus berupa array of object dengan key "nik"'])->withInput();
                 }
-                
+
                 $nik = $obj['nik'];
 
                 $day = (int) substr($nik, 6, 2);
@@ -260,7 +260,7 @@ public function edit(Invoice $invoice)
 
 /**
  * Convert number to Roman numeral
- * 
+ *
  * @param int $number
  * @return string
  */
@@ -280,7 +280,7 @@ private function convertToRoman($number)
         11 => 'XI',
         12 => 'XII'
     ];
-    
+
     return $romans[(int)$number] ?? '';
 }
 
@@ -349,14 +349,16 @@ private function convertToRoman($number)
         }
 
         foreach ($recipients as $email) {
-            Mail::to($email)->send(new \App\Mail\InvoiceStatusChangedMail($invoice, $status, $actor));
+            Mail::to($email)->send(new InvoiceStatusChangedMail($invoice, $status, $actor));
         }
     }
 
     public function download(Invoice $invoice)
     {
         $pdf = Pdf::loadView('invoices.pdf', compact('invoice'));
-        return $pdf->download("Invoice-{$invoice->invoice_number}.pdf");
+
+        $sanitizedInvoiceNumber = str_replace(['/', '\\'], '-', $invoice->invoice_number);
+
+        return $pdf->download("Invoice-{$sanitizedInvoiceNumber}.pdf");
     }
-    
 }

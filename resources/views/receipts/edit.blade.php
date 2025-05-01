@@ -28,7 +28,7 @@
                             @endif
                             <div class="mb-3">
                                 <label for="invoice_id" class="form-label">Pilih Invoice</label>
-                                <select name="invoice_id" id="invoice_id" class="form-select" readonly disabled>
+                                <select id="invoice_id" class="form-select" disabled>
                                     <option value="">-- Pilih Invoice --</option>
                                     @foreach ($invoices as $invoice)
                                         <option value="{{ $invoice->id }}"
@@ -37,6 +37,7 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                <input type="hidden" name="invoice_id" value="{{ $receipt->invoice_id }}">
                                 @error('invoice_id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -45,28 +46,18 @@
                             <div class="mb-3">
                                 <label for="amount_paid" class="form-label">Jumlah Dibayar</label>
                                 <input type="number" name="amount_paid" id="amount_paid" class="form-control"
-                                    value="{{ old('amount_paid', $receipt->amount_paid) }}" required>
+                                    value="{{ old('amount_paid', $receipt->amount_paid) }}" required >
                                 @error('amount_paid')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="payment_status" class="form-label">Status Pembayaran Invoice</label>
-                                <select name="payment_status" id="payment_status" class="form-select" required>
-                                    <option value="Pending"
-                                        {{ $receipt->invoice->payment_status == 'Pending' ? 'selected' : '' }}>Pending
-                                    </option>
-                                    <option value="Partial"
-                                        {{ $receipt->invoice->payment_status == 'Partial' ? 'selected' : '' }}>Partial
-                                    </option>
-                                    <option value="Complete"
-                                        {{ $receipt->invoice->payment_status == 'Complete' ? 'selected' : '' }}>Complete
-                                    </option>
-                                </select>
-                                @error('payment_status')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <small class="form-text text-muted">
+                                    Status pembayaran akan otomatis diperbarui berdasarkan jumlah dibayar:
+                                    <ul>
+                                        <li>0: Pending</li>
+                                        <li>Sebagian dari total: Partial</li>
+                                        <li>Sama dengan total: Complete</li>
+                                    </ul>
+                                </small>
                             </div>
 
                             <div class="mb-3">
@@ -107,6 +98,25 @@
         </div>
     </div>
 @endsection
+@push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const invoiceSelect = document.getElementById('invoice_id');
+    const amountInput = document.getElementById('amount_paid');
+
+    const invoices = @json($invoices->pluck('amount', 'id'));
+
+    const selectedInvoiceId = invoiceSelect.value;
+    const maxAmount = invoices[selectedInvoiceId] || 0;
+
+    if (maxAmount > 0) {
+        amountInput.max = maxAmount;
+    } else {
+        amountInput.removeAttribute('max');
+    }
+});
+</script>
+@endpush
 @push('css')
     <style>
         @media (max-width: 767px) {

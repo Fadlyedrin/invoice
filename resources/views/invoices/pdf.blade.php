@@ -88,11 +88,11 @@
             $details = json_decode($item->item_details, true);
         @endphp
 
-        <h3>{{ $item->item_name }}</h3>
+        <h3>Nama Item: {{ $item->item_name }}</h3>
         <table class="items-table">
             <thead>
                 <tr>
-                    <th style="text-align: left;">#</th>
+                    <th style="text-align: left;">No.</th>
                     <th style="text-align: left;">NIK</th>
                     <th style="text-align: left;">Nama</th>
                     <th style="text-align: left;">Provinsi</th>
@@ -106,7 +106,7 @@
                 @if(is_array($details) && count($details) > 0)
                     @foreach($details as $i => $detail)
                         <tr>
-                            <td>{{ $i + 1 }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $detail['nik'] ?? '-' }}</td>
                             <td>{{ $detail['nama'] ?? '-' }}</td>
                             <td>{{ $detail['provinsi'] ?? '-' }}</td>
