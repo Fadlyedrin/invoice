@@ -54,8 +54,7 @@
                                     <option value="Credit Card">Credit Card</option>
                                     <option value="Bank Transfer">Bank Transfer</option>
                                 </select>
-                            </div>
-
+                            </div>  
                             <div class="mb-3">
                                 <label for="payment_date" class="form-label">Tanggal Pembayaran</label>
                                 <input type="date" name="payment_date" id="payment_date" class="form-control" required>

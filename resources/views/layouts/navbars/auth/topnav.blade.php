@@ -6,7 +6,7 @@
 
                     <!-- Logo -->
                     <a class="navbar-brand font-weight-bolder ms-2" href="{{ route('home') }}">
-                        Invoice System
+                        Baitussalam
                     </a>
 
                     <!-- Hamburger / Toggler Button -->
@@ -68,7 +68,15 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" style="margin-top: 0.3rem !important; top: 100% !important;">
                                     <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                                    <li><form role="form" method="POST" action="{{ route('logout') }}" id="logout-form">
+                                            @csrf
+                                            <a href="{{ route('logout') }}"
+                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                                class="dropdown-item">
+                                                <span class="d-sm-inline d-none">Log out</span>
+                                            </a>
+                                        </form>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
